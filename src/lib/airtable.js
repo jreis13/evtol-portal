@@ -22,7 +22,6 @@ export async function fetchCompanies() {
 export async function fetchModels() {
   try {
     const table = process.env.AIRTABLE_PRODUCTS_TABLE
-    console.log("Using products table:", table)
 
     const records = await productsBase(table).select().all()
 
@@ -32,6 +31,22 @@ export async function fetchModels() {
     }))
   } catch (error) {
     console.error("Airtable fetchModels error:", error)
+    throw error
+  }
+}
+
+export async function fetchSales() {
+  try {
+    const table = process.env.AIRTABLE_SALES_TABLE
+
+    const records = await companiesBase(table).select().all()
+
+    return records.map((record) => ({
+      id: record.id,
+      fields: record.fields,
+    }))
+  } catch (error) {
+    console.error("Airtable fetchSales error:", error)
     throw error
   }
 }
