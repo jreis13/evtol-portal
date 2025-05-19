@@ -5,21 +5,106 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import React from "react"
+import { useEffect, useMemo, useState } from "react"
 
-export default function DataTable({ title, records = [], blurred = false }) {
-  const columns = React.useMemo(() => {
-    const sample = records[0]?.fields || {}
-    return Object.keys(sample).map((key) => ({
+export default function DataTable({
+  title,
+  records = [],
+  blurred = false,
+  visibleFields,
+}) {
+  const [filters, setFilters] = useState({ "Order Date": "2025 - 2026" })
+  const [filteredRecords, setFilteredRecords] = useState([])
+
+  const sample = records[0]?.fields || {}
+  const keys = visibleFields || Object.keys(sample)
+
+  const getYear = (dateStr) => {
+    const date = new Date(dateStr)
+    return isNaN(date.getFullYear()) ? null : date.getFullYear()
+  }
+
+  const getYearRange = (year) => {
+    if (!year || isNaN(year)) return "Unknown"
+    const start = Math.floor(year)
+    return `${start} - ${start + 1}`
+  }
+
+  const getOrdersRange = (num) => {
+    const n = Number(num)
+    if (isNaN(n)) return "Unknown"
+    if (n < 10) return "0-9"
+    if (n < 20) return "10-19"
+    if (n < 30) return "20-29"
+    return "30+"
+  }
+
+  const enhancedRecords = useMemo(() => {
+    return records.map((r) => {
+      const newFields = { ...r.fields }
+
+      if (newFields["Order Date"]) {
+        const year = getYear(newFields["Order Date"])
+        newFields["Order Date"] = getYearRange(year)
+      }
+
+      if (newFields["Number of Orders"]) {
+        newFields["Orders Range"] = getOrdersRange(
+          newFields["Number of Orders"]
+        )
+      }
+
+      return { ...r, fields: newFields }
+    })
+  }, [records])
+
+  const filterKeys = ["Company", "Type", "Orders Range", "Order Date"]
+
+  const fieldOptions = useMemo(() => {
+    const options = {}
+    enhancedRecords.forEach((record) => {
+      filterKeys.forEach((key) => {
+        const value = record.fields[key]
+        if (value !== undefined) {
+          options[key] = options[key] || new Set()
+          options[key].add(value)
+        }
+      })
+    })
+
+    return Object.fromEntries(
+      Object.entries(options).map(([k, v]) => [k, Array.from(v).sort()])
+    )
+  }, [enhancedRecords])
+
+  useEffect(() => {
+    const filtered = enhancedRecords.filter((r) =>
+      Object.entries(filters).every(([field, value]) =>
+        value ? String(r.fields[field]) === value : true
+      )
+    )
+    setFilteredRecords(filtered)
+  }, [enhancedRecords, filters])
+
+  const columns = useMemo(() => {
+    return keys.map((key) => ({
       header: key,
       accessorKey: key,
+      cell: ({ row }) => {
+        if (key === "Order Date") {
+          return row.original._original?.["Order Date"] || "—"
+        }
+        return row.original[key] || "—"
+      },
     }))
-  }, [records])
+  }, [keys])
 
-  const data = React.useMemo(() => {
-    if (!Array.isArray(records)) return []
-    return records.map((r) => r.fields)
-  }, [records])
+  const data = useMemo(() => {
+    return filteredRecords.map((r) => ({
+      ...r.fields,
+      _original: r.fields,
+    }))
+  }, [filteredRecords])
 
   const table = useReactTable({
     data,
@@ -29,7 +114,34 @@ export default function DataTable({ title, records = [], blurred = false }) {
 
   return (
     <div className="max-w-7xl mx-auto mb-20">
-      <h2 className="text-4xl font-semibold mb-12 text-[#403f4c]">{title}</h2>
+      <h2 className="text-4xl font-semibold mb-6 text-[#403f4c]">{title}</h2>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+        {filterKeys.map((key) => (
+          <div key={key}>
+            <label className="block text-sm font-medium text-[#403f4c] mb-1">
+              {key}
+            </label>
+            <select
+              value={filters[key] || ""}
+              onChange={(e) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  [key]: e.target.value || undefined,
+                }))
+              }
+              className="w-full rounded-md border border-gray-300 px-3 py-1 text-sm"
+            >
+              <option value="">All</option>
+              {(fieldOptions[key] || []).map((option) => (
+                <option key={option} value={option}>
+                  {String(option)}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
+      </div>
 
       <div className="relative rounded-xl bg-[#f5f5f5] text-[#34333d] overflow-x-auto scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-500 pb-4">
         {blurred && (
