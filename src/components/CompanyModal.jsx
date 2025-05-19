@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
-import React from "react"
+import React, { useEffect } from "react"
 
 export default function CompanyModal({
   isOpen,
@@ -11,6 +11,18 @@ export default function CompanyModal({
   fieldsToDisplay = [],
 }) {
   const fields = company?.fields || null
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden")
+    } else {
+      document.body.classList.remove("overflow-hidden")
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden")
+    }
+  }, [isOpen])
 
   return (
     <AnimatePresence>
@@ -21,7 +33,7 @@ export default function CompanyModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 lg:px-0"
           onClick={onClose}
         >
           <motion.div
