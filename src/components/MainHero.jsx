@@ -43,9 +43,9 @@ export default function MainHero() {
           <Image
             src="/hero.png"
             alt="Main Hero"
-            width={200}
-            height={200}
-            className="rounded-xl object-cover w-full"
+            width={500}
+            height={500}
+            className="rounded-xl object-contain w-full"
           />
         </div>
       </div>
