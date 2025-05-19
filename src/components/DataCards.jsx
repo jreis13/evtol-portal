@@ -40,7 +40,7 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
   const visibleItems = items.slice(currentIndex, currentIndex + visibleCount)
 
   return (
-    <div className="py-12 relative">
+    <div className="max-w-7xl mx-auto mb-20 relative">
       <h2 className="text-4xl font-semibold mb-10 text-[#403f4c]">{title}</h2>
       <div className="relative">
         {currentIndex > 0 && (
