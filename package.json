@@ -36,7 +36,7 @@
     "leaflet": "^1.9.4",
     "micro": "^10.0.1",
     "next": "^14.2.26",
-    "nodemailer": "^6.10.0",
+    "nodemailer": "^6.10.1",
     "papaparse": "^5.4.1",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
