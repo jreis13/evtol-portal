@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import ScrollReveal from "src/animations/ScrollReveal"
+import ContactForm from "src/components/ContactForm"
 import DataCards from "src/components/DataCards"
 import DataTable from "src/components/DataTable"
 import MainHero from "src/components/MainHero"
@@ -40,12 +41,8 @@ export default function Layout() {
       <div id="hero">
         <MainHero />
       </div>
-      {/* <ScrollReveal>
-        <div id="pricing">
-          <Pricing />
-        </div>
-      </ScrollReveal> */}
-      <div id="tables" className="container mx-auto px-4 lg:px-0">
+
+      <div className="container mx-auto px-4 lg:px-0">
         <div id="companies">
           <ScrollReveal>
             <DataCards
@@ -107,6 +104,10 @@ export default function Layout() {
           />
         </div>
       </div>
+      <div id="contact">
+        <ContactForm />
+      </div>
+
       <Footer />
     </div>
   )
