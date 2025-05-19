@@ -64,10 +64,7 @@ export default function Header() {
         }`}
       >
         <div className="container mx-auto flex items-center justify-between px-6">
-          <div className="flex items-end gap-2">
-            <Logo />
-            <p className="text-xs text-[#d87103]">by Exponential Vector ©</p>
-          </div>
+          <Logo />
 
           <ul className="hidden lg:flex items-center gap-6">
             {authPaths.map(({ name, path }) => (

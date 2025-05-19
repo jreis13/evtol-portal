@@ -53,14 +53,23 @@ export default function Footer() {
     <footer className="bg-[#f5f5f5] px-8 py-8 w-screen overflow-x-hidden">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:flex gap-6 items-center justify-between">
-          <div className="flex items-end gap-2">
-            <Logo />
-            <p className="text-xs text-[#d87103]">by Exponential Vector ©</p>
-          </div>
+          <Logo />
 
           <div className="flex justify-center">
             <Typography className="text-sm text-center">
-              © {currentYear} Exponential Vector S.R.O - All Rights Reserved.
+              {" "}
+              Powered by{" "}
+              <span>
+                <a
+                  href="https://exponentialvector.eu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline whitespace-nowrap"
+                >
+                  Exponential Vector
+                </a>
+              </span>{" "}
+              S.R.O - {currentYear} All Rights Reserved.
             </Typography>
           </div>
 
@@ -93,7 +102,7 @@ export default function Footer() {
                 <IconButton
                   variant="text"
                   size="lg"
-                  className="text-[#403f4c] hover:text-black"
+                  className="text-[#f5f5f5] hover:text-black"
                 >
                   {icon}
                 </IconButton>
