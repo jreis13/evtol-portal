@@ -55,9 +55,9 @@ export default function CompanyModal({
                   {fields["Company Name"] || fields.Name}
                 </h2>
 
-                {fields["Company Summary"] || fields["Description"] ? (
+                {fields["Company Summary"] || fields["Description "] ? (
                   <p className="text-[#555] mb-4">
-                    {fields["Company Summary"] || fields["Description"]}
+                    {fields["Company Summary"] || fields["Description "]}
                   </p>
                 ) : null}
 
