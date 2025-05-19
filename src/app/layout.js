@@ -10,7 +10,7 @@ export const metadata = {
     title: "eVTOL Portal",
     description:
       "Next-Gen Strategy Tools for Disruptive Business Models - AAM & eVTOL ecosystems",
-    url: "https://exponentialvector.eu",
+    url: "https://evtolportal.com",
     siteName: "eVTOL Portal",
     type: "website",
   },
@@ -35,9 +35,9 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              url: "https://exponentialvector.eu",
+              url: "https://evtolportal.com",
               name: "eVTOL Portal",
-              alternateName: "ExponentialVector.eu",
+              alternateName: "EvtolPortal.com",
             }),
           }}
         />
