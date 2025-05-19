@@ -1,11 +1,11 @@
 import "src/common/styles/_reset.css"
 
-import MainLayout from "src/layouts/MainLayout"
+import Layout from "src/layouts/Layout"
 
 export default function Home() {
   return (
     <div>
-      <MainLayout />
+      <Layout />
     </div>
   )
 }

@@ -47,7 +47,7 @@ export default function NavMenu() {
             <li key={name}>
               <Link
                 to={path}
-                className="text-white hover:text-gray-400 transition"
+                className="text-[#34333d] hover:text-gray-400 transition duration-300"
               >
                 {name}
               </Link>
@@ -61,9 +61,9 @@ export default function NavMenu() {
           className="lg:hidden"
         >
           {openNav ? (
-            <XMarkIcon className="h-6 w-6 text-white" />
+            <XMarkIcon className="h-6 w-6 text-[#34333d]" />
           ) : (
-            <Bars3Icon className="h-6 w-6 text-white" />
+            <Bars3Icon className="h-6 w-6 text-[#34333d]" />
           )}
         </IconButton>
       </div>
@@ -74,7 +74,7 @@ export default function NavMenu() {
             <li key={name}>
               <Link
                 to={path}
-                className="text-white hover:text-gray-400 transition block"
+                className="text-[#34333d] hover:text-gray-400 transition duration-300 block"
               >
                 {name}
               </Link>

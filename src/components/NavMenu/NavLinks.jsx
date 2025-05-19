@@ -10,7 +10,7 @@ export default function NavLinks({ paths, isDesktop }) {
   const normalizedPathname = pathname?.replace(/\/$/, "").toLowerCase()
 
   return (
-    (<nav>
+    <nav>
       <ul
         className={classNames("flex list-none", {
           "text-right": !isDesktop,
@@ -27,7 +27,7 @@ export default function NavLinks({ paths, isDesktop }) {
             .map(({ name, path, type, icon }) => (
               <li key={name} className="link cursor-pointer">
                 {type === "image" && icon ? (
-                  <a href={path} target="_blank" rel="noopener noreferrer">
+                  <a href={path} rel="noopener noreferrer">
                     {icon}
                   </a>
                 ) : (
@@ -38,6 +38,6 @@ export default function NavLinks({ paths, isDesktop }) {
               </li>
             ))}
       </ul>
-    </nav>)
-  );
+    </nav>
+  )
 }

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Syne:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Kameron:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +9,10 @@
 
 :root {
   --header-height: 3rem;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .main-hero {
@@ -24,10 +29,11 @@
 }
 
 h1 {
-  font-family: "Syne", sans-serif;
+  font-family: "Sora", sans-serif;
   font-size: 64px;
   font-weight: 700;
   line-height: 76px;
+  color: #403f4c;
 }
 
 @media (max-width: 1024px) {
@@ -52,34 +58,42 @@ h1 {
 }
 
 h2 {
-  font-family: "Syne", sans-serif;
+  font-family: "Sora", sans-serif;
   font-size: 36px;
   font-weight: 600;
   line-height: 42px;
+  color: #403f4c;
 }
 
 h3 {
-  font-family: "Syne", sans-serif;
+  font-family: "Sora", sans-serif;
   font-size: 20px;
   font-weight: 600;
   line-height: 30px;
+  color: #403f4c;
 }
 
 body {
   overflow-x: hidden;
-  background-color: #403f4c;
-  color: #e8e8e8;
-  font-family: "Syne", sans-serif;
+  background-color: #f5f5f5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23403f4c' fill-opacity='0.14' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+  color: #403f4c;
+  font-family: "Sora", sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
 }
 
 p {
-  font-family: "Syne", sans-serif;
+  font-family: "Sora", sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
+  color: #403f4c;
+}
+
+li {
+  color: #403f4c;
 }
 
 .link {
@@ -90,12 +104,12 @@ p {
 }
 
 .link:hover {
-  color: #6600cc;
+  color: #d87103;
   opacity: 0.7;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-  height: 8px;
+  height: 6px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
@@ -119,8 +133,8 @@ p {
 
 .text-outline {
   text-shadow:
-    -1px -1px 0 #403f4c,
-    1px -1px 0 #403f4c,
-    -1px 1px 0 #403f4c,
-    1px 1px 0 #403f4c;
+    -1px -1px 0 #f5f5f5,
+    1px -1px 0 #f5f5f5,
+    -1px 1px 0 #f5f5f5,
+    1px 1px 0 #f5f5f5;
 }
