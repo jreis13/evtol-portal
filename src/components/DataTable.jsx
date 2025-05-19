@@ -17,6 +17,7 @@ export default function DataTable({ title, records = [], blurred = false }) {
   }, [records])
 
   const data = React.useMemo(() => {
+    if (!Array.isArray(records)) return []
     return records.map((r) => r.fields)
   }, [records])
 
