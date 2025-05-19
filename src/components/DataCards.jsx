@@ -6,23 +6,35 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Card from "./Card"
 import CompanyModal from "./CompanyModal"
 
 export default function DataCards({ title, items, config, modalFields = [] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [visibleCount, setVisibleCount] = useState(1)
   const [selectedItem, setSelectedItem] = useState(null)
 
-  const visibleCount = 3
   const total = items.length
 
+  const updateVisibleCount = () => {
+    setVisibleCount(window.innerWidth >= 1024 ? 3 : 1)
+  }
+
+  useEffect(() => {
+    updateVisibleCount()
+    window.addEventListener("resize", updateVisibleCount)
+    return () => window.removeEventListener("resize", updateVisibleCount)
+  }, [])
+
   const handlePrev = () => {
-    setCurrentIndex((prev) => Math.max(prev - 1, 0))
+    setCurrentIndex((prev) => Math.max(prev - visibleCount, 0))
   }
 
   const handleNext = () => {
-    setCurrentIndex((prev) => Math.min(prev + 1, total - visibleCount))
+    setCurrentIndex((prev) =>
+      Math.min(prev + visibleCount, total - visibleCount)
+    )
   }
 
   const visibleItems = items.slice(currentIndex, currentIndex + visibleCount)
@@ -34,13 +46,13 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
         {currentIndex > 0 && (
           <button
             onClick={handlePrev}
-            className="absolute -left-10 top-1/2 transform -translate-y-1/2 z-10 py-2 mr-4 text-3xl"
+            className="absolute -left-10 top-1/2 transform -translate-y-1/2 z-10 py-2 ml-4 lg:mr-4 text-3xl"
           >
             <FontAwesomeIcon icon={faArrowCircleLeft} />
           </button>
         )}
 
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto flex justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -48,7 +60,7 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex justify-between gap-6"
+              className="flex justify-between gap-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 px-4"
             >
               {visibleItems.map((item) => (
                 <div
@@ -66,7 +78,7 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
         {currentIndex + visibleCount < total && (
           <button
             onClick={handleNext}
-            className="absolute -right-10 top-1/2 transform -translate-y-1/2 z-10 py-2 ml-4 text-3xl"
+            className="absolute -right-10 top-1/2 transform -translate-y-1/2 z-10 py-2 mr-4 lg:ml-4 text-3xl"
           >
             <FontAwesomeIcon icon={faArrowCircleRight} />
           </button>
