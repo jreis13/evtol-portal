@@ -52,45 +52,45 @@ export default function Footer() {
   return (
     <footer className="bg-[#f5f5f5] px-8 py-8 w-screen overflow-x-hidden">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 lg:flex gap-6 items-center justify-between">
-          <Logo />
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
+          {/* Left: Logo + Attribution + Policy Links */}
+          <div className="flex flex-col lg:flex-row items-center gap-6">
+            <Logo />
 
-          <div className="flex justify-center">
-            <Typography className="text-sm text-center">
-              {" "}
+            <Typography className="text-sm">
               Powered by{" "}
-              <span>
-                <a
-                  href="https://exponentialvector.eu"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline whitespace-nowrap"
-                >
-                  Exponential Vector
-                </a>
-              </span>{" "}
+              <a
+                href="https://exponentialvector.eu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline whitespace-nowrap"
+              >
+                Exponential Vector
+              </a>{" "}
               S.R.O - {currentYear} All Rights Reserved.
             </Typography>
+
+            <div className="flex gap-4">
+              <a
+                href="/files/Privacy_Policy_Exponential_Vector.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline whitespace-nowrap"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="/files/Terms_and_Conditions_Exponential_Vector.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline whitespace-nowrap"
+              >
+                Terms & Conditions
+              </a>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:flex lg:flex-row items-center justify-center lg:justify-end gap-6">
-            <a
-              href="/files/Privacy_Policy_Exponential_Vector.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline whitespace-nowrap"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="/files/Terms_and_Conditions_Exponential_Vector.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline whitespace-nowrap"
-            >
-              Terms & Conditions
-            </a>
-          </div>
+          {/* Right: Social Icons */}
           <div className="flex justify-center gap-3">
             {socialPATHS.map(({ name, path, icon }) => (
               <a
