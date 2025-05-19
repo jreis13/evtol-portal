@@ -46,7 +46,7 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
         {currentIndex > 0 && (
           <button
             onClick={handlePrev}
-            className="absolute -left-10 top-1/2 transform -translate-y-1/2 z-10 py-2 ml-4 lg:mr-4 text-3xl"
+            className="absolute -left-10 top-1/2 transform -translate-y-1/2 z-10 py-2 ml-8 lg:mr-4 text-3xl"
           >
             <FontAwesomeIcon icon={faArrowCircleLeft} />
           </button>
@@ -65,7 +65,7 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
               {visibleItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-shrink-0 w-[400px] cursor-pointer"
+                  className="flex-shrink-0 lg:w-[400px] cursor-pointer"
                   onClick={() => setSelectedItem(item)}
                 >
                   <Card item={item} onClick={setSelectedItem} config={config} />
@@ -78,7 +78,7 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
         {currentIndex + visibleCount < total && (
           <button
             onClick={handleNext}
-            className="absolute -right-10 top-1/2 transform -translate-y-1/2 z-10 py-2 mr-4 lg:ml-4 text-3xl"
+            className="absolute -right-10 top-1/2 transform -translate-y-1/2 z-10 py-2 mr-8 lg:ml-4 text-3xl"
           >
             <FontAwesomeIcon icon={faArrowCircleRight} />
           </button>

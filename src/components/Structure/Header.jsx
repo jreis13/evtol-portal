@@ -1,17 +1,24 @@
 "use client"
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
+import {
+  BuildingOffice2Icon,
+  ChartBarIcon,
+  CubeIcon,
+  EnvelopeIcon,
+  HomeIcon,
+} from "@heroicons/react/24/solid"
 import { IconButton, Navbar } from "@material-tailwind/react"
 import { useEffect, useState } from "react"
 import Link from "../Link"
 import Logo from "../Logo"
 
 const PATHS = [
-  { name: "Home", path: "#" },
-  { name: "Companies", path: "#companies" },
-  { name: "Models", path: "#models" },
-  { name: "Sales", path: "#sales" },
-  { name: "Contact", path: "#contact" },
+  { name: "Home", path: "#", icon: HomeIcon },
+  { name: "Companies", path: "#companies", icon: BuildingOffice2Icon },
+  { name: "Models", path: "#models", icon: CubeIcon },
+  { name: "Sales", path: "#sales", icon: ChartBarIcon },
+  { name: "Contact", path: "#contact", icon: EnvelopeIcon },
 ]
 
 export default function Header() {
@@ -54,9 +61,14 @@ export default function Header() {
           <Logo />
 
           <ul className="hidden lg:flex items-center gap-6">
-            {PATHS.map(({ name, path }) => (
+            {PATHS.map(({ name, path, icon: Icon }) => (
               <li key={name}>
-                <Link to={path}>{name}</Link>
+                <Link to={path}>
+                  <div className="flex items-center gap-2">
+                    {name}
+                    <Icon className="h-4 w-4" />
+                  </div>
+                </Link>
               </li>
             ))}
           </ul>
@@ -82,10 +94,13 @@ export default function Header() {
           }`}
         >
           <ul className="flex flex-col gap-4 p-6">
-            {PATHS.map(({ name, path }) => (
+            {PATHS.map(({ name, path, icon: Icon }) => (
               <li key={name} className="text-[#f5f5f5]">
-                <Link to={path} className="transition duration-300 block">
-                  {name}
+                <Link to={path}>
+                  <div className="block flex items-center gap-2">
+                    {name}
+                    <Icon className="h-4 w-4" />
+                  </div>
                 </Link>
               </li>
             ))}

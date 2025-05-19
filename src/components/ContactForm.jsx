@@ -30,7 +30,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto mb-20">
+    <div className="max-w-7xl mx-auto mb-20 px-4 lg:px-0">
       <h2 className="text-4xl font-semibold mb-6 text-[#403f4c]">Contact</h2>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col md:flex-row gap-4 mb-4">
