@@ -7,6 +7,7 @@ import Link from "../Link"
 import Logo from "../Logo"
 
 const PATHS = [
+  { name: "Home", path: "#" },
   { name: "Companies", path: "#companies" },
   { name: "Models", path: "#models" },
   { name: "Sales", path: "#sales" },
@@ -55,12 +56,7 @@ export default function Header() {
           <ul className="hidden lg:flex items-center gap-6">
             {PATHS.map(({ name, path }) => (
               <li key={name}>
-                <Link
-                  to={path}
-                  className="hover:text-gray-400 transition duration-300"
-                >
-                  {name}
-                </Link>
+                <Link to={path}>{name}</Link>
               </li>
             ))}
           </ul>
@@ -87,7 +83,7 @@ export default function Header() {
         >
           <ul className="flex flex-col gap-4 p-6">
             {PATHS.map(({ name, path }) => (
-              <li key={name}>
+              <li key={name} className="text-[#f5f5f5]">
                 <Link to={path} className="transition duration-300 block">
                   {name}
                 </Link>
