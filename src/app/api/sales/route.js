@@ -7,12 +7,10 @@ export async function GET() {
       fetchCompanies(),
     ])
 
-    // Create a lookup table for company ID → Company Name
     const companyMap = Object.fromEntries(
       companies.map((company) => [company.id, company.fields["Company Name"]])
     )
 
-    // Map company IDs to names in sales
     const enrichedSales = sales.map((sale) => {
       const companyId = Array.isArray(sale.fields.Company)
         ? sale.fields.Company[0]
