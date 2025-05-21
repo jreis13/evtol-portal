@@ -110,7 +110,8 @@ li {
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-  height: 6px;
+  height: 5px;
+  width: 5px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
@@ -118,7 +119,7 @@ li {
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: #34333d;
+  background-color: #000;
   border-radius: 10px;
 }
 
