@@ -8,9 +8,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import Card from "./Card"
-import CompanyModal from "./CompanyModal"
+import CompanyModal from "./Companies/CompanyModal"
+import ProductModal from "./ProductModal"
 
-export default function DataCards({ title, items, config, modalFields = [] }) {
+export default function DataCards({
+  title,
+  items,
+  config,
+  modalFields = [],
+  mainStatsFields = [],
+}) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [visibleCount, setVisibleCount] = useState(1)
   const [selectedItem, setSelectedItem] = useState(null)
@@ -18,7 +25,7 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
   const total = items.length
 
   const updateVisibleCount = () => {
-    setVisibleCount(window.innerWidth >= 1024 ? 3 : 1)
+    setVisibleCount(window.innerWidth >= 1024 ? 6 : 1)
   }
 
   useEffect(() => {
@@ -85,12 +92,23 @@ export default function DataCards({ title, items, config, modalFields = [] }) {
         )}
       </div>
 
-      <CompanyModal
-        isOpen={!!selectedItem}
-        onClose={() => setSelectedItem(null)}
-        company={selectedItem}
-        fieldsToDisplay={modalFields}
-      />
+      {title === "Companies" && (
+        <CompanyModal
+          isOpen={!!selectedItem}
+          onClose={() => setSelectedItem(null)}
+          company={selectedItem}
+          mainStatsFields={mainStatsFields}
+        />
+      )}
+
+      {title === "Models" && (
+        <ProductModal
+          isOpen={!!selectedItem}
+          onClose={() => setSelectedItem(null)}
+          model={selectedItem}
+          fieldsToDisplay={modalFields}
+        />
+      )}
     </div>
   )
 }
