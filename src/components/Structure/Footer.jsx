@@ -1,7 +1,7 @@
 "use client"
 
 import { IconButton, Typography } from "@material-tailwind/react"
-import Logo from "../Logo"
+import Logo from "./Logo"
 
 const currentYear = new Date().getFullYear()
 
@@ -53,7 +53,6 @@ export default function Footer() {
     <footer className="bg-[#f5f5f5] px-8 py-8 w-screen overflow-x-hidden">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
-          {/* Left: Logo + Attribution + Policy Links */}
           <div className="flex flex-col lg:flex-row items-center gap-6">
             <Logo />
 
@@ -90,7 +89,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Right: Social Icons */}
           <div className="flex justify-center gap-3">
             {socialPATHS.map(({ name, path, icon }) => (
               <a
@@ -99,11 +97,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <IconButton
-                  variant="text"
-                  size="lg"
-                  className="text-[#f5f5f5] hover:text-black"
-                >
+                <IconButton variant="text" size="lg">
                   {icon}
                 </IconButton>
               </a>

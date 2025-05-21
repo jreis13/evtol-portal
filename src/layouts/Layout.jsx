@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react"
 import ScrollReveal from "src/animations/ScrollReveal"
-import ContactForm from "src/components/ContactForm"
 import DataCards from "src/components/DataCards"
 import DataTable from "src/components/DataTable"
-import MainHero from "src/components/MainHero"
+import ContactForm from "src/components/Structure/ContactForm"
 import Footer from "src/components/Structure/Footer"
 import Header from "src/components/Structure/Header"
+import MainHero from "src/components/Structure/MainHero"
 
 export default function Layout() {
   const [companies, setCompanies] = useState([])
@@ -58,10 +58,13 @@ export default function Layout() {
                   "Funding Round (from Funding Stage)",
                 ],
               }}
-              modalFields={[
+              mainStatsFields={[
+                "Text Amount",
+                "Type",
                 "Funding Round (from Funding Stage)",
-                "Amount Raised (from Funding Amount)",
-                "Products",
+                "# of Employees",
+                "Year Founded",
+                "HQ",
               ]}
             />
           </ScrollReveal>
@@ -73,17 +76,20 @@ export default function Layout() {
               title="Models"
               items={models}
               config={{
-                imageField: "Logo",
+                imageField: "Image",
                 titleField: "Name",
                 descriptionField: "Description ",
                 fields: ["Type", "Unit", "Stage"],
               }}
               modalFields={[
-                "Manufacturer",
-                "Range",
-                "Speed",
-                "Capacity",
-                "Powertrain",
+                "Unit",
+                "Type",
+                "Range (KM)",
+                "Top Speed (KM/h)",
+                "Total Capacity",
+                "Passenger Capacity",
+                "Suitability",
+                "Stage",
               ]}
             />
           </ScrollReveal>

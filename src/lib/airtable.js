@@ -50,3 +50,15 @@ export async function fetchSales() {
     throw error
   }
 }
+
+export async function getFinancialRecordsByIds(ids) {
+  const table = process.env.AIRTABLE_FINANCIALS_TABLE
+
+  const records = await companiesBase(table)
+    .select({
+      filterByFormula: `OR(${ids.map((id) => `RECORD_ID()='${id}'`).join(",")})`,
+    })
+    .all()
+
+  return records
+}

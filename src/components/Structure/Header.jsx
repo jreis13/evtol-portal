@@ -10,8 +10,8 @@ import {
 } from "@heroicons/react/24/solid"
 import { IconButton, Navbar } from "@material-tailwind/react"
 import { useEffect, useState } from "react"
-import Link from "../Link"
-import Logo from "../Logo"
+import Link from "./Link"
+import Logo from "./Logo"
 
 const PATHS = [
   { name: "Home", path: "#", icon: HomeIcon },

@@ -1,4 +1,3 @@
-// components/ContactForm.jsx
 "use client"
 
 import { useState } from "react"
@@ -41,7 +40,7 @@ export default function ContactForm() {
             value={form.name}
             onChange={handleChange}
             required
-            className="w-full p-2 border rounded-xl"
+            className="w-full p-2 border rounded-xl focus:outline-none"
           />
           <input
             type="email"
@@ -50,7 +49,7 @@ export default function ContactForm() {
             value={form.email}
             onChange={handleChange}
             required
-            className="w-full p-2 border rounded-xl"
+            className="w-full p-2 border rounded-xl focus:outline-none"
           />
         </div>
         <textarea
@@ -59,11 +58,11 @@ export default function ContactForm() {
           value={form.message}
           onChange={handleChange}
           required
-          className="w-full p-2 border rounded-xl"
+          className="w-full p-2 border rounded-xl focus:outline-none"
         />
         <button
           type="submit"
-          className="bg-[#d87103] text-white px-4 py-2 rounded hover:text-[#403f4c] transition duration-300"
+          className="bg-[#d87103] text-[#f5f5f5] px-4 py-2 rounded hover:text-[#403f4c] transition duration-300"
         >
           Send
         </button>
