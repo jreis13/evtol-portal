@@ -130,7 +130,7 @@ export default function DataTable({
                   [key]: e.target.value || undefined,
                 }))
               }
-              className="w-full rounded-md border border-gray-300 px-3 py-1 text-sm"
+              className="w-full rounded-md border border-gray-300 px-3 py-1 text-sm outline-none"
             >
               <option value="">All</option>
               {(fieldOptions[key] || []).map((option) => (
@@ -150,7 +150,7 @@ export default function DataTable({
               <p className="text-[#403f4c] font-semibold mb-2">
                 This table is only available to Pro users.
               </p>
-              <button className="bg-[#d87103] duration-300 hover:text-[#403f4c] text-white px-5 py-2 rounded-md font-medium transition">
+              <button className="bg-[#d87103] duration-300 hover:text-[#403f4c] text-[#f5f5f5] px-5 py-2 rounded-md font-medium transition">
                 Upgrade Now
               </button>
             </div>
