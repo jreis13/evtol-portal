@@ -1,5 +1,3 @@
-"use client"
-
 import {
   faArrowCircleLeft,
   faArrowCircleRight,
@@ -7,8 +5,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
-import Card from "./Card"
+import CompanyCard from "./Companies/CompanyCard"
 import CompanyModal from "./Companies/CompanyModal"
+import ProductCard from "./ProductCard"
 import ProductModal from "./ProductModal"
 
 export default function DataCards({
@@ -25,7 +24,7 @@ export default function DataCards({
   const total = items.length
 
   const updateVisibleCount = () => {
-    setVisibleCount(window.innerWidth >= 1024 ? 6 : 1)
+    setVisibleCount(window.innerWidth >= 1024 ? 3 : 1)
   }
 
   useEffect(() => {
@@ -75,7 +74,19 @@ export default function DataCards({
                   className="flex-shrink-0 lg:w-[400px] cursor-pointer"
                   onClick={() => setSelectedItem(item)}
                 >
-                  <Card item={item} onClick={setSelectedItem} config={config} />
+                  {title === "Companies" ? (
+                    <CompanyCard
+                      item={item}
+                      onClick={setSelectedItem}
+                      config={config}
+                    />
+                  ) : (
+                    <ProductCard
+                      item={item}
+                      onClick={setSelectedItem}
+                      config={config}
+                    />
+                  )}
                 </div>
               ))}
             </motion.div>
