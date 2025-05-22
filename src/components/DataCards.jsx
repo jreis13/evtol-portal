@@ -24,7 +24,13 @@ export default function DataCards({
   const total = items.length
 
   const updateVisibleCount = () => {
-    setVisibleCount(window.innerWidth >= 1024 ? 3 : 1)
+    setVisibleCount(
+      title === "Companies" && window.innerWidth >= 1024
+        ? 3
+        : title === "Models" && window.innerWidth >= 1024
+          ? 6
+          : 1
+    )
   }
 
   useEffect(() => {
@@ -66,7 +72,7 @@ export default function DataCards({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex justify-between gap-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 px-4"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch px-4"
             >
               {visibleItems.map((item) => (
                 <div

@@ -23,18 +23,18 @@ export default function CompanyCard({ item, onClick, config }) {
         <Image
           src={"/icons/click-icon.svg"}
           alt={name}
-          width={70}
-          height={70}
+          width={1000}
+          height={1000}
         />
       </button>
       <div className="flex items-center mb-4">
         {logo && (
-          <div className="gap-5 mb-6 flex items-center">
+          <div className="gap-4 mb-6 flex items-center">
             <Image
               src={logo}
               alt={name}
-              width={70}
-              height={70}
+              width={1000}
+              height={1000}
               className="rounded-md object-contain h-[70px] w-[70px]"
             />
             <h3 className="text-xl font-semibold group-hover:text-[#f5f5f5]">
@@ -67,7 +67,7 @@ export default function CompanyCard({ item, onClick, config }) {
           </div>
         )}
         {employees && (
-          <div>
+          <div className="text-right">
             <div className="font-medium">Employees</div>
             <div>{employees}</div>
           </div>
@@ -79,7 +79,7 @@ export default function CompanyCard({ item, onClick, config }) {
           </div>
         )}
         {HQ && (
-          <div>
+          <div className="text-right">
             <div className="font-medium">HQ</div>
             <div>{HQ}</div>
           </div>
