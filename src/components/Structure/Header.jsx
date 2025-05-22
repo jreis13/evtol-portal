@@ -60,7 +60,7 @@ export default function Header() {
         <div className="container mx-auto flex items-center justify-between px-6">
           <Logo />
 
-          <ul className="hidden lg:flex items-center gap-6">
+          <ul className="hidden lg:flex items-center gap-4">
             {PATHS.map(({ name, path, icon: Icon }) => (
               <li key={name}>
                 <Link to={path}>

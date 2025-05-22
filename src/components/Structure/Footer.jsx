@@ -52,8 +52,8 @@ export default function Footer() {
   return (
     <footer className="bg-[#f5f5f5] px-8 py-8 w-screen overflow-x-hidden">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
-          <div className="flex flex-col lg:flex-row items-center gap-6">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 text-center lg:text-left">
+          <div className="flex flex-col lg:flex-row items-center gap-4">
             <Logo />
 
             <Typography className="text-sm">

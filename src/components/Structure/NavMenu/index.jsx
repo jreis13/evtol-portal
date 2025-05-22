@@ -42,7 +42,7 @@ export default function NavMenu() {
       <div className="container mx-auto flex items-center justify-between py-3">
         <Logo />
 
-        <ul className="hidden lg:flex items-center gap-6">
+        <ul className="hidden lg:flex items-center gap-4">
           {authPaths.map(({ name, path }) => (
             <li key={name}>
               <Link

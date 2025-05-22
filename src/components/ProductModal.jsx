@@ -68,7 +68,7 @@ export default function ProductModal({
                 />
               </div>
 
-              <div className="flex flex-col gap-6 w-full lg:w-1/2">
+              <div className="flex flex-col gap-4 w-full lg:w-1/2">
                 <div>
                   <h2 className="text-3xl font-semibold mb-2 text-[#f5f5f5]">
                     {fields.Name}
