@@ -130,7 +130,7 @@ export default function DataTable({
                   [key]: e.target.value || undefined,
                 }))
               }
-              className="w-full rounded-md border border-gray-300 px-3 py-1 text-sm outline-none"
+              className="w-full rounded-md border border-[#eaeaea] px-3 py-1 text-sm outline-none"
             >
               <option value="">All</option>
               {(fieldOptions[key] || []).map((option) => (
@@ -174,8 +174,11 @@ export default function DataTable({
           </thead>
 
           <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="border-t border-gray-200">
+            {table.getRowModel().rows.map((row, rowIndex) => (
+              <tr
+                key={row.id}
+                className={`border-t ${rowIndex % 2 === 1 ? "bg-[#eaeaea]" : ""}`}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="px-4 py-3">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
