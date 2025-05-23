@@ -85,8 +85,8 @@ export default function Layout() {
               modalFields={[
                 "Unit",
                 "Type",
-                "Range (KM)",
-                "Top Speed (KM/h)",
+                "Range",
+                "Top Speed",
                 "Total Capacity",
                 "Passenger Capacity",
                 "Suitability",
