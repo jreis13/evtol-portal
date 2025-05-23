@@ -6,7 +6,7 @@ export default function CompanyCard({ item, onClick, config }) {
   const {
     [imageField]: logo,
     [titleField]: name,
-    Patents: marketShare,
+    "Market Share (%)": marketShare,
     "Amount Raised": raised,
     "# of Employees": employees,
     "Year Founded": founded,
