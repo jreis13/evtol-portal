@@ -1,11 +1,12 @@
 import Image from "next/image"
 
 export default function ProductCard({ item, onClick, config }) {
-  const { logo = "/portal.png", name = "Name" } = config || {}
+  const { image = "Image", name = "Name" } = config || {}
+
+  const imageSrc = item.fields[image] || "/portal.png"
 
   const {
     unit = "Unit",
-    type = "Type",
     range = "Range",
     speed = "Top Speed",
     total = "Total Capacity",
@@ -29,7 +30,7 @@ export default function ProductCard({ item, onClick, config }) {
       <div className="flex mb-4 flex-col">
         <div className="gap-4 flex items-center">
           <Image
-            src={logo || "/portal.svg"}
+            src={imageSrc}
             alt={name}
             width={1000}
             height={1000}
