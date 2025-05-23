@@ -44,7 +44,7 @@ export default function CompanyCard({ item, onClick, config }) {
         )}
       </div>
 
-      {marketShare != null && (
+      {Number.isFinite(+marketShare) && (
         <div className="mb-4 group-hover:text-[#f5f5f5]">
           <div className="flex justify-between text-sm mb-1">
             <span>Market Share:</span>
@@ -86,7 +86,7 @@ export default function CompanyCard({ item, onClick, config }) {
         )}
       </div>
 
-      {performanceIndex != null && (
+      {Number.isFinite(+performanceIndex) && (
         <div className="mb-6 group-hover:text-[#f5f5f5]">
           <div className="flex justify-between text-sm mb-1">
             <span>Performance Index</span>
