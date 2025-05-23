@@ -58,7 +58,10 @@ export default function DataTable({
     })
   }, [records])
 
-  const filterKeys = ["Company", "Type", "Orders Range", "Order Date"]
+  const filterKeys = useMemo(
+    () => ["Company", "Type", "Orders Range", "Order Date"],
+    []
+  )
 
   const fieldOptions = useMemo(() => {
     const options = {}
@@ -75,7 +78,7 @@ export default function DataTable({
     return Object.fromEntries(
       Object.entries(options).map(([k, v]) => [k, Array.from(v).sort()])
     )
-  }, [enhancedRecords])
+  }, [enhancedRecords, filterKeys])
 
   useEffect(() => {
     const filtered = enhancedRecords.filter((r) =>
