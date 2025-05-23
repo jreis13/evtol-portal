@@ -60,7 +60,7 @@ export default function ProductModal({
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10">
               <div className="flex-shrink-0 w-full lg:w-1/2">
                 <Image
-                  src={fields.Image || "/portal.png"}
+                  src={fields["Product Image"] || "/portal.png"}
                   alt={fields.Name}
                   width={1000}
                   height={1000}

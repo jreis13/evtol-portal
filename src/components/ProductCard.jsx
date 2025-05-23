@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 export default function ProductCard({ item, onClick, config }) {
-  const { image = "Image", name = "Name" } = config || {}
+  const { image = "Logo Company", name = "Name" } = config || {}
 
   const imageSrc = item.fields[image] || "/portal.png"
 
