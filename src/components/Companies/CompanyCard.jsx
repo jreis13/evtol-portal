@@ -11,7 +11,6 @@ export default function CompanyCard({ item, onClick, config }) {
     "# of Employees": employees,
     "Year Founded": founded,
     HQ,
-    Patents: performanceIndex,
   } = item.fields
 
   return (
@@ -44,21 +43,6 @@ export default function CompanyCard({ item, onClick, config }) {
         )}
       </div>
 
-      {Number.isFinite(+marketShare) && (
-        <div className="mb-4 group-hover:text-[#f5f5f5]">
-          <div className="flex justify-between text-sm mb-1">
-            <span>Market Share:</span>
-            <span>{marketShare}%</span>
-          </div>
-          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#d87103]"
-              style={{ width: `${marketShare}%` }}
-            />
-          </div>
-        </div>
-      )}
-
       <div className="grid grid-cols-2 gap-4 text-sm mb-4 group-hover:text-[#f5f5f5]">
         {raised && (
           <div>
@@ -85,17 +69,16 @@ export default function CompanyCard({ item, onClick, config }) {
           </div>
         )}
       </div>
-
-      {Number.isFinite(+performanceIndex) && (
-        <div className="mb-6 group-hover:text-[#f5f5f5]">
+      {Number.isFinite(+marketShare) && (
+        <div className="mb-4 group-hover:text-[#f5f5f5]">
           <div className="flex justify-between text-sm mb-1">
-            <span>Performance Index</span>
-            <span>{performanceIndex}/100</span>
+            <span>Market Share:</span>
+            <span>{marketShare}%</span>
           </div>
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-[#d87103]"
-              style={{ width: `${performanceIndex}%` }}
+              style={{ width: `${marketShare}%` }}
             />
           </div>
         </div>
