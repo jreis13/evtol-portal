@@ -60,7 +60,7 @@ export default function Layout() {
                 ],
               }}
               mainStatsFields={[
-                "Text Amount",
+                "Amount Raised",
                 "Type",
                 "Funding Round (from Funding Stage)",
                 "# of Employees",
