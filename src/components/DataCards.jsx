@@ -24,13 +24,7 @@ export default function DataCards({
   const total = items.length
 
   const updateVisibleCount = () => {
-    setVisibleCount(
-      title === "Companies" && window.innerWidth >= 1024
-        ? 3
-        : title === "Models" && window.innerWidth >= 1024
-          ? 6
-          : 1
-    )
+    setVisibleCount(window.innerWidth >= 1024 ? 3 : 1)
   }
 
   useEffect(() => {
