@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import ScrollReveal from "src/animations/ScrollReveal"
 import DataCards from "src/components/DataCards"
 import DataTable from "src/components/DataTable"
+import ProductComparison from "src/components/ProductComparison"
 import ContactForm from "src/components/Structure/ContactForm"
 import Footer from "src/components/Structure/Footer"
 import Header from "src/components/Structure/Header"
@@ -92,6 +93,7 @@ export default function Layout() {
                 "Stage",
               ]}
             />
+            <ProductComparison items={models} config={{ titleField: "Name" }} />
           </ScrollReveal>
         </div>
 
