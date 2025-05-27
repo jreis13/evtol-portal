@@ -43,6 +43,15 @@ export default function Layout() {
     (m) => Array.isArray(m.fields.Trending) && m.fields.Trending.includes("Yes")
   )
 
+  const companiesWithoutTrending = companies.filter(
+    (c) =>
+      !Array.isArray(c.fields.Trending) || !c.fields.Trending.includes("Yes")
+  )
+  const modelsWithoutTrending = models.filter(
+    (m) =>
+      !Array.isArray(m.fields.Trending) || !m.fields.Trending.includes("Yes")
+  )
+
   return (
     <div className="relative flex flex-col w-full overflow-x-hidden">
       <Header />
@@ -82,7 +91,7 @@ export default function Layout() {
           <ScrollReveal>
             <DataCards
               title="Manufacturers"
-              items={companies}
+              items={companiesWithoutTrending}
               config={{
                 imageField: "Logo",
                 titleField: "Company Name",
@@ -134,7 +143,7 @@ export default function Layout() {
           <ScrollReveal>
             <DataCards
               title="Aircrafts"
-              items={models}
+              items={modelsWithoutTrending}
               config={{
                 imageField: "Image",
                 titleField: "Name",
