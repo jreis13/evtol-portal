@@ -23,14 +23,14 @@ export default function Layout() {
   }, [])
 
   useEffect(() => {
-    fetch("/api/companies", { cache: "no-store" })
+    fetch("/api/models", { cache: "no-store" })
       .then((res) => res.json())
       .then(setModels)
       .catch((err) => console.error("Error fetching models:", err))
   }, [])
 
   useEffect(() => {
-    fetch("/api/companies", { cache: "no-store" })
+    fetch("/api/sales", { cache: "no-store" })
       .then((res) => res.json())
       .then(setSales)
       .catch((err) => console.error("Error fetching sales:", err))
