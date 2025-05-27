@@ -57,7 +57,7 @@ export default function ProductModal({
                 size="sm"
               />
             </button>
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10">
+            <div className="flex flex-col lg:flex-row items-center gap-10">
               <div className="flex-shrink-0 w-full lg:w-1/2">
                 <Image
                   src={fields["Product Image"] || "/portal.png"}
