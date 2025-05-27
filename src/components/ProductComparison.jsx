@@ -33,8 +33,11 @@ export default function ProductComparison({ items = [], config = {} }) {
       .filter((attr) => attr !== "Range" && attr !== "Top Speed")
   }, [allAttributes, items])
 
-  const graphTypesSingle = ["Bar", "Line", "Doughnut", "Polar Area"]
-  const graphTypesDouble = ["Scatter", "Bubble"]
+  const graphTypesSingle = useMemo(
+    () => ["Bar", "Doughnut", "Polar Area", "Radar"],
+    []
+  )
+  const graphTypesDouble = useMemo(() => ["Radar", "Bar", "Line"], [])
 
   const [xAttribute, setXAttribute] = useState("")
   const [yAttribute, setYAttribute] = useState("")
@@ -48,7 +51,7 @@ export default function ProductComparison({ items = [], config = {} }) {
 
   useEffect(() => {
     setGraphType(yAttribute ? graphTypesDouble[0] : graphTypesSingle[0])
-  }, [yAttribute])
+  }, [graphTypesDouble, graphTypesSingle, yAttribute])
 
   const labels = items.map((item) => item.fields[titleField] || "")
 

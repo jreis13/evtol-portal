@@ -16,6 +16,7 @@ import {
   Doughnut,
   Line,
   PolarArea,
+  Radar,
   Scatter,
 } from "react-chartjs-2"
 
@@ -92,14 +93,30 @@ export default function ProductChart({
 
   const generalData = {
     labels,
-    datasets: [
-      {
-        label: yLabel ? `${xLabel} vs ${yLabel}` : `${xLabel}`,
-        data: xData,
-        backgroundColor: Object.values(companyColors),
-        borderRadius: graphType === "Bar" ? 10 : undefined,
-      },
-    ],
+    datasets:
+      yData && yData.length
+        ? [
+            {
+              label: xLabel,
+              data: xData,
+              backgroundColor: Object.values(companyColors),
+              borderRadius: graphType === "Bar" ? 10 : undefined,
+            },
+            {
+              label: yLabel,
+              data: yData,
+              borderRadius: graphType === "Bar" ? 10 : undefined,
+              backgroundColor: Object.values(companyColors),
+            },
+          ]
+        : [
+            {
+              label: xLabel,
+              data: xData,
+              backgroundColor: Object.values(companyColors),
+              borderRadius: graphType === "Bar" ? 10 : undefined,
+            },
+          ],
   }
 
   const chartOptions = {
@@ -189,6 +206,13 @@ export default function ProductChart({
           <PolarArea data={generalData} />
         </div>
       )
+    case "Radar":
+      return (
+        <div style={areaGraphStyle}>
+          <Radar data={generalData} />
+        </div>
+      )
+
     default:
       return null
   }
