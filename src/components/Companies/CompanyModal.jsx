@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 import { useEffect } from "react"
+import icons from "../../common/icons"
 import CompanyFinancials from "./CompanyFinancials"
 
 export default function CompanyModal({
@@ -156,6 +157,16 @@ export default function CompanyModal({
                           : "grid-cols-2"
                     }`}
                   >
+                    {fields["Founding Team"].map((entry, index) => (
+                      <Image
+                        key={index}
+                        src={icons["personIcon"]}
+                        alt={entry.split(" - ")[0]}
+                        width={1000}
+                        height={1000}
+                        className="object-contain w-16 h-16 rounded-full mx-auto"
+                      />
+                    ))}
                     {fields["Founding Team"].map((entry, index) => (
                       <p
                         key={index}
