@@ -158,26 +158,26 @@ export default function CompanyModal({
                     }`}
                   >
                     {fields["Founding Team"].map((entry, index) => (
-                      <Image
-                        key={index}
-                        src={icons["personIcon"]}
-                        alt={entry.split(" - ")[0]}
-                        width={1000}
-                        height={1000}
-                        className="object-contain w-16 h-16 rounded-full mx-auto"
-                      />
-                    ))}
-                    {fields["Founding Team"].map((entry, index) => (
-                      <p
-                        key={index}
-                        className="text-[#ddd] text-lg text-center"
-                      >
-                        {entry.split(" - ")[0]} <br />{" "}
-                        <span className="text-md text-[#bbb]">
-                          {entry.split(" - ")[1]}
-                        </span>
-                        <br />
-                      </p>
+                      <div key={index} className="flex flex-col items-center">
+                        <Image
+                          key={index}
+                          src={icons["personIcon"]}
+                          alt={entry.split(" - ")[0]}
+                          width={1000}
+                          height={1000}
+                          className="object-contain w-16 h-16 rounded-full mx-auto"
+                        />
+                        <p
+                          key={index}
+                          className="text-[#ddd] text-lg text-center"
+                        >
+                          {entry.split(" - ")[0]} <br />{" "}
+                          <span className="text-md text-[#bbb]">
+                            {entry.split(" - ")[1]}
+                          </span>
+                          <br />
+                        </p>
+                      </div>
                     ))}
                   </div>
                 </div>
