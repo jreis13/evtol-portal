@@ -16,21 +16,21 @@ export default function Layout() {
   const [sales, setSales] = useState([])
 
   useEffect(() => {
-    fetch("/api/companies")
+    fetch("/api/companies", { cache: "no-store" })
       .then((res) => res.json())
       .then(setCompanies)
       .catch((err) => console.error("Error fetching companies:", err))
   }, [])
 
   useEffect(() => {
-    fetch("/api/models")
+    fetch("/api/companies", { cache: "no-store" })
       .then((res) => res.json())
       .then(setModels)
       .catch((err) => console.error("Error fetching models:", err))
   }, [])
 
   useEffect(() => {
-    fetch("/api/sales")
+    fetch("/api/companies", { cache: "no-store" })
       .then((res) => res.json())
       .then(setSales)
       .catch((err) => console.error("Error fetching sales:", err))
