@@ -36,6 +36,13 @@ export default function Layout() {
       .catch((err) => console.error("Error fetching sales:", err))
   }, [])
 
+  const trendingCompanies = companies.filter(
+    (c) => Array.isArray(c.fields.Trending) && c.fields.Trending.includes("Yes")
+  )
+  const trendingModels = models.filter(
+    (m) => Array.isArray(m.fields.Trending) && m.fields.Trending.includes("Yes")
+  )
+
   return (
     <div className="relative flex flex-col w-full overflow-x-hidden">
       <Header />
@@ -47,7 +54,34 @@ export default function Layout() {
         <div id="companies">
           <ScrollReveal>
             <DataCards
-              title="Companies"
+              title="Trending Manufacturers"
+              items={trendingCompanies}
+              config={{
+                imageField: "Logo",
+                titleField: "Company Name",
+                descriptionField: "Company Summary",
+                fields: [
+                  "HQ",
+                  "Year Founded",
+                  "Funding Round (from Funding Stage)",
+                ],
+              }}
+              mainStatsFields={[
+                "Amount Raised",
+                "Type",
+                "Funding Round (from Funding Stage)",
+                "# of Employees",
+                "Year Founded",
+                "HQ",
+              ]}
+            />
+          </ScrollReveal>
+        </div>
+
+        <div>
+          <ScrollReveal>
+            <DataCards
+              title="Manufacturers"
               items={companies}
               config={{
                 imageField: "Logo",
@@ -74,7 +108,32 @@ export default function Layout() {
         <div id="models">
           <ScrollReveal>
             <DataCards
-              title="Models"
+              title="Trending Aircrafts"
+              items={trendingModels}
+              config={{
+                imageField: "Image",
+                titleField: "Name",
+                descriptionField: "Description ",
+                fields: ["Type", "Unit", "Stage"],
+              }}
+              modalFields={[
+                "Unit",
+                "Type",
+                "Range",
+                "Top Speed",
+                "Total Capacity",
+                "Passenger Capacity",
+                "Suitability",
+                "Stage",
+              ]}
+            />
+          </ScrollReveal>
+        </div>
+
+        <div>
+          <ScrollReveal>
+            <DataCards
+              title="Aircrafts"
               items={models}
               config={{
                 imageField: "Image",

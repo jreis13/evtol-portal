@@ -15,8 +15,8 @@ import Logo from "./Logo"
 
 const PATHS = [
   { name: "Home", path: "#", icon: HomeIcon },
-  { name: "Companies", path: "#companies", icon: BuildingOffice2Icon },
-  { name: "Models", path: "#models", icon: CubeIcon },
+  { name: "Manufacturers", path: "#companies", icon: BuildingOffice2Icon },
+  { name: "Aircrafts", path: "#models", icon: CubeIcon },
   { name: "Sales", path: "#sales", icon: ChartBarIcon },
   { name: "Contact", path: "#contact", icon: EnvelopeIcon },
 ]

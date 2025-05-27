@@ -45,6 +45,10 @@ export default function DataCards({
 
   const visibleItems = items.slice(currentIndex, currentIndex + visibleCount)
 
+  const isCompanySection =
+    title === "Manufacturers" || title === "Trending Manufacturers"
+  const isModelSection = title === "Aircrafts" || title === "Trending Aircrafts"
+
   return (
     <div className="max-w-7xl mx-auto mb-20 relative">
       <h2 className="text-4xl font-semibold mb-10 text-[#403f4c]">{title}</h2>
@@ -74,7 +78,7 @@ export default function DataCards({
                   className="flex-shrink-0 lg:w-[400px] cursor-pointer"
                   onClick={() => setSelectedItem(item)}
                 >
-                  {title === "Companies" ? (
+                  {isCompanySection ? (
                     <CompanyCard
                       item={item}
                       onClick={setSelectedItem}
@@ -103,7 +107,7 @@ export default function DataCards({
         )}
       </div>
 
-      {title === "Companies" && (
+      {isCompanySection && (
         <CompanyModal
           isOpen={!!selectedItem}
           onClose={() => setSelectedItem(null)}
@@ -112,7 +116,7 @@ export default function DataCards({
         />
       )}
 
-      {title === "Models" && (
+      {isModelSection && (
         <ProductModal
           isOpen={!!selectedItem}
           onClose={() => setSelectedItem(null)}
