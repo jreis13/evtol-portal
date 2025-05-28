@@ -60,7 +60,7 @@ export default function Layout() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-0">
-        <div id="companies">
+        <div id="manufacturers">
           <ScrollReveal>
             <DataCards
               title="Trending Manufacturers"
@@ -114,7 +114,7 @@ export default function Layout() {
           </ScrollReveal>
         </div>
 
-        <div id="models">
+        <div id="aircrafts">
           <ScrollReveal>
             <DataCards
               title="Trending Aircrafts"
