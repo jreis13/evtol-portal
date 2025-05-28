@@ -72,10 +72,10 @@ export default function ProductComparison({ items = [], config = {} }) {
   }, [allAttributes, filteredItems])
 
   const graphTypesSingle = useMemo(
-    () => ["Bar", "Doughnut", "Polar Area", "Radar"],
+    () => ["Radar", "Bar", "Doughnut", "Polar Area"],
     []
   )
-  const graphTypesDouble = useMemo(() => ["Bar", "Line"], [])
+  const graphTypesDouble = useMemo(() => ["Radar", "Bar", "Line"], [])
 
   useEffect(() => {
     if (!xAttribute && numericAttributes.length) {
