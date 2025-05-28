@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useMemo, useState } from "react"
 import Dropdown from "./Dropdown"
 import ProductChart from "./ProductChart"
@@ -5,9 +7,47 @@ import ProductChart from "./ProductChart"
 export default function ProductComparison({ items = [], config = {} }) {
   const { titleField = "Name" } = config
 
+  const suitabilityOptions = useMemo(() => {
+    const setOpts = new Set(["All"])
+    items.forEach((item) => {
+      const raw = item.fields.Suitability
+      if (typeof raw === "string") {
+        const norm = raw.toLowerCase().trim()
+        if (norm === "urban air mobility") setOpts.add("Urban Air Mobility")
+        else if (norm === "regional air mobility")
+          setOpts.add("Regional Air Mobility")
+        else if (norm === "suburban air mobility")
+          setOpts.add("Suburban Air Mobility")
+      }
+    })
+    return Array.from(setOpts)
+  }, [items])
+
+  const [suitabilityFilter, setSuitabilityFilter] = useState("All")
+  const [xAttribute, setXAttribute] = useState("")
+  const [yAttribute, setYAttribute] = useState("")
+  const [graphType, setGraphType] = useState("")
+
+  const filteredItems = useMemo(() => {
+    if (suitabilityFilter === "All") return items
+    return items.filter((item) => {
+      const raw = item.fields.Suitability
+      if (typeof raw !== "string") return false
+      const norm = raw.toLowerCase().trim()
+      return (
+        (suitabilityFilter === "Urban Air Mobility" &&
+          norm === "urban air mobility") ||
+        (suitabilityFilter === "Regional Air Mobility" &&
+          norm === "regional air mobility") ||
+        (suitabilityFilter === "Suburban Air Mobility" &&
+          norm === "suburban air mobility")
+      )
+    })
+  }, [items, suitabilityFilter])
+
   const allAttributes = useMemo(() => {
     const attrs = new Set()
-    items.forEach((item) => {
+    filteredItems.forEach((item) => {
       Object.keys(item.fields).forEach((key) => {
         if (key !== titleField && key.toLowerCase() !== "image") {
           attrs.add(key)
@@ -15,33 +55,27 @@ export default function ProductComparison({ items = [], config = {} }) {
       })
     })
     return Array.from(attrs)
-  }, [items, titleField])
+  }, [filteredItems, titleField])
 
   const numericAttributes = useMemo(() => {
     const pattern = /^[\d,.]+\s*(km|km\/h|%|m|ft)?$/i
     return allAttributes
       .filter((attr) =>
-        items.some((item) => {
+        filteredItems.some((item) => {
           const v = item.fields[attr]
           if (typeof v === "number") return true
-          if (typeof v === "string") {
-            return pattern.test(v.trim())
-          }
+          if (typeof v === "string") return pattern.test(v.trim())
           return false
         })
       )
       .filter((attr) => attr !== "Range" && attr !== "Top Speed")
-  }, [allAttributes, items])
+  }, [allAttributes, filteredItems])
 
   const graphTypesSingle = useMemo(
     () => ["Bar", "Doughnut", "Polar Area", "Radar"],
     []
   )
-  const graphTypesDouble = useMemo(() => ["Radar", "Bar", "Line"], [])
-
-  const [xAttribute, setXAttribute] = useState("")
-  const [yAttribute, setYAttribute] = useState("")
-  const [graphType, setGraphType] = useState("")
+  const graphTypesDouble = useMemo(() => ["Bar", "Line"], [])
 
   useEffect(() => {
     if (!xAttribute && numericAttributes.length) {
@@ -51,12 +85,12 @@ export default function ProductComparison({ items = [], config = {} }) {
 
   useEffect(() => {
     setGraphType(yAttribute ? graphTypesDouble[0] : graphTypesSingle[0])
-  }, [graphTypesDouble, graphTypesSingle, yAttribute])
+  }, [yAttribute, graphTypesDouble, graphTypesSingle])
 
-  const labels = items.map((item) => item.fields[titleField] || "")
+  const labels = filteredItems.map((item) => item.fields[titleField] || "")
 
-  const extractData = (attr) => {
-    return items.map((item) => {
+  const extractData = (attr) =>
+    filteredItems.map((item) => {
       const v = item.fields[attr]
       const n =
         typeof v === "number"
@@ -66,14 +100,13 @@ export default function ProductComparison({ items = [], config = {} }) {
             : NaN
       return isNaN(n) ? null : n
     })
-  }
 
   const xData = xAttribute ? extractData(xAttribute) : []
   const yData = yAttribute ? extractData(yAttribute) : []
 
-  if (!items.length) {
+  if (!filteredItems.length) {
     return (
-      <div className="text-center py-8">No items available for comparison</div>
+      <div className="text-center py-8">No items match {suitabilityFilter}</div>
     )
   }
 
@@ -86,12 +119,11 @@ export default function ProductComparison({ items = [], config = {} }) {
           attributes={numericAttributes}
           selectedValue={xAttribute}
           onChange={(value) => {
-            if (value === yAttribute) {
-              setYAttribute("")
-            }
+            if (value === yAttribute) setYAttribute("")
             setXAttribute(value)
           }}
         />
+
         <Dropdown
           attributes={[
             "None",
@@ -100,13 +132,23 @@ export default function ProductComparison({ items = [], config = {} }) {
           selectedValue={yAttribute || "None"}
           onChange={(value) => setYAttribute(value === "None" ? "" : value)}
         />
+
         <Dropdown
           attributes={availableGraphTypes}
           selectedValue={graphType}
           onChange={setGraphType}
           className="ml-auto"
         />
+
+        <div className="ml-auto">
+          <Dropdown
+            attributes={suitabilityOptions}
+            selectedValue={suitabilityFilter}
+            onChange={setSuitabilityFilter}
+          />
+        </div>
       </div>
+
       {xData.length > 0 && (
         <ProductChart
           labels={labels}

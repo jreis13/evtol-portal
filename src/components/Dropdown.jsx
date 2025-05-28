@@ -58,7 +58,8 @@ export default function Dropdown({ attributes, selectedValue, onChange }) {
                 onChange(attr)
                 setIsOpen(false)
               }}
-              className="cursor-pointer px-4 py-2 text-[#e8e8e8] hover:rounded hover:bg-[#2d2c39] hover:text-white"
+              className="cursor-pointer px-4 py-2 text-[#e8e8e8] hover:rounded hover:bg-[#2d2c39] hover:text-white w-full"
+              style={{ minWidth: dropdownWidth }}
             >
               {attr.charAt(0).toUpperCase() + attr.slice(1)}
             </li>
