@@ -13,7 +13,7 @@ export default function DataTable({
   blurred = false,
   visibleFields,
 }) {
-  const [filters, setFilters] = useState({ "Order Date": "2025 - 2026" })
+  const [filters, setFilters] = useState({ "Order Date Range": "2025 - 2026" })
   const [filteredRecords, setFilteredRecords] = useState([])
 
   const sample = records[0]?.fields || {}
@@ -45,7 +45,7 @@ export default function DataTable({
 
       if (newFields["Order Date"]) {
         const year = getYear(newFields["Order Date"])
-        newFields["Order Date"] = getYearRange(year)
+        newFields["Order Date Range"] = getYearRange(year)
       }
 
       if (newFields["Number of Orders"]) {
@@ -59,7 +59,7 @@ export default function DataTable({
   }, [records])
 
   const filterKeys = useMemo(
-    () => ["Company", "Type", "Orders Range", "Order Date"],
+    () => ["Company", "Type", "Orders Range", "Order Date Range"],
     []
   )
 
@@ -123,7 +123,7 @@ export default function DataTable({
         {filterKeys.map((key) => (
           <div key={key}>
             <label className="block text-sm font-medium text-[#403f4c] mb-1">
-              {key}
+              {key === "Order Date Range" ? "Order Date" : key}
             </label>
             <select
               value={filters[key] || ""}
