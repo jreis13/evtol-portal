@@ -32,6 +32,8 @@ ChartJS.register(
   LineElement
 )
 
+import { useMemo } from "react"
+
 export default function ProductChart({
   labels,
   xData,
@@ -91,16 +93,15 @@ export default function ProductChart({
     ],
   }
 
-  const generalData = {
-    labels,
-    datasets:
+  const generalData = useMemo(() => {
+    const baseDatasets =
       yData && yData.length
         ? [
             {
               label: xLabel,
               data: xData,
-              backgroundColor: Object.values(companyColors),
               borderRadius: graphType === "Bar" ? 10 : undefined,
+              backgroundColor: Object.values(companyColors),
             },
             {
               label: yLabel,
@@ -113,11 +114,29 @@ export default function ProductChart({
             {
               label: xLabel,
               data: xData,
-              backgroundColor: Object.values(companyColors),
               borderRadius: graphType === "Bar" ? 10 : undefined,
+              backgroundColor: Object.values(companyColors),
             },
-          ],
-  }
+          ]
+
+    if (graphType === "Bar" || graphType === "Line") {
+      const indices = baseDatasets[0].data
+        .map((v, i) => [v, i])
+        .sort((a, b) => b[0] - a[0])
+        .map(([, i]) => i)
+      const sortedLabels = indices.map((i) => labels[i])
+      const sortedDatasets = baseDatasets.map((ds) => ({
+        ...ds,
+        data: indices.map((i) => ds.data[i]),
+        backgroundColor: Array.isArray(ds.backgroundColor)
+          ? indices.map((i) => ds.backgroundColor[i])
+          : ds.backgroundColor,
+      }))
+      return { labels: sortedLabels, datasets: sortedDatasets }
+    }
+
+    return { labels, datasets: baseDatasets }
+  }, [labels, xData, yData, xLabel, yLabel, graphType, companyColors])
 
   const chartOptions = {
     responsive: true,
