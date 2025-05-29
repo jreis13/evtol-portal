@@ -14,8 +14,7 @@ export default function MainHero() {
             of air travel
           </h1>
           <p className="text-lg text-gray-600 mb-2 lg:mb-10">
-            Discover the latest in electric vertical takeoff and landing
-            technology.
+            Tracking the latest developments in the eVTOL space.
           </p>
           <NewsletterCTA />
         </div>
