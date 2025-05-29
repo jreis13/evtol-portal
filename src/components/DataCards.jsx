@@ -87,10 +87,10 @@ export default function DataCards({
     [items]
   )
   const amountRaisedBuckets = [
-    { label: "1 – 10 M", min: 1, max: 10_000_000 },
-    { label: "10 M – 100 M", min: 10_000_000, max: 100_000_000 },
-    { label: "100 M – 1 B", min: 100_000_000, max: 1_000_000_000 },
-    { label: "> 1 B", min: 1_000_000_000, max: Infinity },
+    { label: "$1 – $10 M", min: 1, max: 10_000_000 },
+    { label: "$10 M – $100 M", min: 10_000_000, max: 100_000_000 },
+    { label: "$100 M – $1 B", min: 100_000_000, max: 1_000_000_000 },
+    { label: "> $1 B", min: 1_000_000_000, max: Infinity },
   ]
   const rangeBuckets = useMemo(() => makeBuckets("Range (KM)"), [items])
   const speedBuckets = useMemo(() => makeBuckets("Top Speed (KM/h)"), [items])
@@ -214,7 +214,7 @@ export default function DataCards({
           ) : (
             <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full justify-between">
               <div className="flex flex-col lg:flex-row gap-4">
-                <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
+                {/* <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
                   <h3>Market Share:</h3>
                   <motion.select
                     whileHover={{ scale: 1.05 }}
@@ -231,7 +231,7 @@ export default function DataCards({
                       </option>
                     ))}
                   </motion.select>
-                </div>
+                </div> */}
                 <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
                   <h3>Amount Raised:</h3>
                   <motion.select
@@ -319,7 +319,7 @@ export default function DataCards({
                     <option value="">All</option>
                     {rangeBuckets.map((b) => (
                       <option key={b.label} value={b.label}>
-                        {b.label}
+                        {b.label} KM
                       </option>
                     ))}
                   </motion.select>
@@ -337,7 +337,7 @@ export default function DataCards({
                     <option value="">All</option>
                     {speedBuckets.map((b) => (
                       <option key={b.label} value={b.label}>
-                        {b.label}
+                        {b.label} KM/h
                       </option>
                     ))}
                   </motion.select>
