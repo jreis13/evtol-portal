@@ -28,7 +28,7 @@ const socialPATHS = [
   },
   {
     name: "LinkedIn",
-    path: "https://www.linkedin.com/company/exponential-vector/",
+    path: "https://www.linkedin.com/company/evtol-portal/",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
