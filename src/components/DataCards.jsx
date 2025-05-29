@@ -213,7 +213,7 @@ export default function DataCards({
             </motion.button>
           ) : (
             <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full justify-between">
-              <div className="flex gap-4">
+              <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
                   <h3>Market Share:</h3>
                   <motion.select
@@ -305,7 +305,7 @@ export default function DataCards({
             </motion.button>
           ) : (
             <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full justify-between">
-              <div className="flex gap-4">
+              <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
                   <h3>Range:</h3>
                   <motion.select
