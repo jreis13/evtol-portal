@@ -20,6 +20,8 @@ import {
   Scatter,
 } from "react-chartjs-2"
 
+import annotationPlugin from "chartjs-plugin-annotation"
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -29,7 +31,8 @@ ChartJS.register(
   RadialLinearScale,
   Tooltip,
   Title,
-  LineElement
+  LineElement,
+  annotationPlugin
 )
 
 import { useMemo } from "react"
@@ -53,6 +56,18 @@ export default function ProductChart({
     return acc
   }, {})
 
+  const avgX = useMemo(
+    () => xData.reduce((sum, v) => sum + v, 0) / (xData.length || 1),
+    [xData]
+  )
+  const avgY = useMemo(
+    () =>
+      yData && yData.length
+        ? yData.reduce((sum, v) => sum + v, 0) / yData.length
+        : null,
+    [yData]
+  )
+
   const combinedData = xData.map((x, i) => {
     const [company] = labels[i].split(" - ")
     return {
@@ -71,7 +86,7 @@ export default function ProductChart({
       {
         label: yLabel ? `${xLabel} vs ${yLabel}` : `${xLabel}`,
         data: combinedData,
-        backgroundColor: combinedData.map((point) => point.color),
+        backgroundColor: combinedData.map((p) => p.color),
         pointRadius: 10,
         pointHoverRadius: 12,
       },
@@ -83,18 +98,14 @@ export default function ProductChart({
     datasets: [
       {
         label: yLabel ? `${xLabel} vs ${yLabel}` : `${xLabel}`,
-        data: combinedData.map((point) => ({
-          x: point.x,
-          y: point.y,
-          r: point.r,
-        })),
-        backgroundColor: combinedData.map((point) => point.color),
+        data: combinedData.map((p) => ({ x: p.x, y: p.y, r: p.r })),
+        backgroundColor: combinedData.map((p) => p.color),
       },
     ],
   }
 
   const generalData = useMemo(() => {
-    const baseDatasets =
+    const base =
       yData && yData.length
         ? [
             {
@@ -120,23 +131,28 @@ export default function ProductChart({
           ]
 
     if (graphType === "Bar" || graphType === "Line") {
-      const indices = baseDatasets[0].data
+      const idx = base[0].data
         .map((v, i) => [v, i])
         .sort((a, b) => b[0] - a[0])
         .map(([, i]) => i)
-      const sortedLabels = indices.map((i) => labels[i])
-      const sortedDatasets = baseDatasets.map((ds) => ({
+      const lbs = idx.map((i) => labels[i])
+      const dsets = base.map((ds) => ({
         ...ds,
-        data: indices.map((i) => ds.data[i]),
+        data: idx.map((i) => ds.data[i]),
         backgroundColor: Array.isArray(ds.backgroundColor)
-          ? indices.map((i) => ds.backgroundColor[i])
+          ? idx.map((i) => ds.backgroundColor[i])
           : ds.backgroundColor,
       }))
-      return { labels: sortedLabels, datasets: sortedDatasets }
+      return { labels: lbs, datasets: dsets }
     }
 
-    return { labels, datasets: baseDatasets }
+    return { labels, datasets: base }
   }, [labels, xData, yData, xLabel, yLabel, graphType, companyColors])
+
+  const avgPrimary = useMemo(() => {
+    const vals = generalData.datasets[0].data
+    return vals.reduce((sum, v) => sum + v, 0) / (vals.length || 1)
+  }, [generalData])
 
   const chartOptions = {
     responsive: true,
@@ -148,27 +164,61 @@ export default function ProductChart({
       },
       tooltip: {
         callbacks: {
-          title: (context) => {
-            if (context[0]?.raw?.label) {
-              return context[0].raw.label
-            }
-            const dataIndex = context[0].dataIndex
-            return labels[dataIndex] || "Unknown"
-          },
-          label: (context) => {
-            const dataIndex = context.dataIndex
-            const datasetLabel = context.dataset.label || xLabel
-            const value = context.raw
-
+          title: (ctx) => ctx[0]?.raw?.label || labels[ctx[0].dataIndex],
+          label: (ctx) => {
             if (graphType === "Scatter" || graphType === "Bubble") {
-              const xValue = context.raw.x
-              const yValue = context.raw.y
-              const xText = `${xLabel}: ${xValue}`
-              const yText = yLabel ? `${yLabel}: ${yValue}` : null
-              return yText ? `${xText}, ${yText}` : xText
+              const { x, y } = ctx.raw
+              return yLabel
+                ? `${xLabel}: ${x}, ${yLabel}: ${y}`
+                : `${xLabel}: ${x}`
             }
+            return `${ctx.dataset.label}: ${ctx.raw}`
+          },
+        },
+      },
+      annotation: {
+        annotations: {
+          avgLine: {
+            display: graphType === "Bar" || graphType === "Line",
+            type: "line",
+            yMin: avgPrimary,
+            yMax: avgPrimary,
+            borderColor: "#403f4c",
+            borderWidth: 1,
+            borderDash: [5, 5],
+            clip: false,
+            label: {
+              display: graphType === "Bar" || graphType === "Line",
+              content: `Avg ${xLabel}: ${avgPrimary.toFixed(0)}`,
+              position: "end",
+              backgroundColor: "rgba(0,0,0,0)",
+              color: "#403f4c",
+              font: { size: 12 },
+              xAdjust: 6,
+              yAdjust: -6,
+            },
+          },
+          avgYLine: {
+            display:
+              (graphType === "Line" && avgY) || (graphType === "Bar" && avgY),
 
-            return `${datasetLabel}: ${value}`
+            type: "line",
+            yMin: avgY,
+            yMax: avgY,
+            borderColor: "#403f4c",
+            borderWidth: 1,
+            borderDash: [5, 5],
+            clip: false,
+            label: {
+              display: graphType === "Line" || graphType === "Bar",
+              content: `${avgY ? `Avg ${yLabel}: ${avgY?.toFixed(0)}` : ""}`,
+              position: "end",
+              backgroundColor: "rgba(0,0,0,0)",
+              color: "#403f4c",
+              font: { size: 12 },
+              xAdjust: 6,
+              yAdjust: -6,
+            },
           },
         },
       },
@@ -188,51 +238,59 @@ export default function ProductChart({
     margin: "0 auto",
   }
 
+  let ChartElement
+  const opts =
+    graphType === "Radar" ||
+    (graphType === "Doughnut") | (graphType === "Polar Area")
+      ? { ...chartOptions, scales: {} }
+      : chartOptions
+
   switch (graphType) {
     case "Scatter":
-      return (
-        <div>
-          <Scatter data={scatterData} options={chartOptions} />
-        </div>
-      )
+      ChartElement = <Scatter data={scatterData} options={chartOptions} />
+      break
     case "Bubble":
-      return (
-        <div>
-          <Bubble data={bubbleData} options={chartOptions} />
-        </div>
-      )
+      ChartElement = <Bubble data={bubbleData} options={chartOptions} />
+      break
     case "Bar":
-      return (
-        <div>
-          <Bar data={generalData} options={chartOptions} />
-        </div>
-      )
+      ChartElement = <Bar data={generalData} options={chartOptions} />
+      break
     case "Line":
-      return (
-        <div>
-          <Line data={generalData} options={chartOptions} />
-        </div>
-      )
+      ChartElement = <Line data={generalData} options={chartOptions} />
+      break
     case "Doughnut":
-      return (
+      ChartElement = (
         <div style={areaGraphStyle}>
-          <Doughnut data={generalData} />
+          <Doughnut data={generalData} options={opts} />
         </div>
       )
+      break
     case "Polar Area":
-      return (
+      ChartElement = (
         <div style={areaGraphStyle}>
-          <PolarArea data={generalData} />
+          <PolarArea data={generalData} options={opts} />
         </div>
       )
+      break
     case "Radar":
-      return (
+      ChartElement = (
         <div style={areaGraphStyle}>
-          <Radar data={generalData} />
+          <Radar data={generalData} options={opts} />
         </div>
       )
-
+      break
     default:
-      return null
+      ChartElement = null
   }
+
+  return (
+    <div>
+      <div className="text-center text-sm font-medium mb-2">
+        {`Average ${xLabel}: ${avgX.toFixed(0)}${
+          yData?.length ? `, Average ${yLabel}: ${avgY.toFixed(0)}` : ""
+        }`}
+      </div>
+      <div>{ChartElement}</div>
+    </div>
+  )
 }

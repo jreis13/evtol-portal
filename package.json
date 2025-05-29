@@ -29,6 +29,7 @@
     "aws-sdk": "^2.1659.0",
     "axios": "^1.8.2",
     "chart.js": "^4.4.3",
+    "chartjs-plugin-annotation": "^3.1.0",
     "classnames": "^2.5.1",
     "cors": "^2.8.5",
     "d3": "^7.9.0",
