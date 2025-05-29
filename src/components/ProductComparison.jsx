@@ -114,33 +114,35 @@ export default function ProductComparison({ items = [], config = {} }) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col lg:flex-row items-center gap-4">
-        <Dropdown
-          attributes={numericAttributes}
-          selectedValue={xAttribute}
-          onChange={(value) => {
-            if (value === yAttribute) setYAttribute("")
-            setXAttribute(value)
-          }}
-        />
+      <div className="flex flex-col lg:flex-row items-center lg:justify-between lg:w-screen gap-4">
+        <div className="flex gap-4">
+          <Dropdown
+            attributes={numericAttributes}
+            selectedValue={xAttribute}
+            onChange={(value) => {
+              if (value === yAttribute) setYAttribute("")
+              setXAttribute(value)
+            }}
+          />
 
-        <Dropdown
-          attributes={[
-            "None",
-            ...numericAttributes.filter((a) => a !== xAttribute),
-          ]}
-          selectedValue={yAttribute || "None"}
-          onChange={(value) => setYAttribute(value === "None" ? "" : value)}
-        />
+          <Dropdown
+            attributes={[
+              "None",
+              ...numericAttributes.filter((a) => a !== xAttribute),
+            ]}
+            selectedValue={yAttribute || "None"}
+            onChange={(value) => setYAttribute(value === "None" ? "" : value)}
+          />
 
-        <Dropdown
-          attributes={availableGraphTypes}
-          selectedValue={graphType}
-          onChange={setGraphType}
-          className="ml-auto"
-        />
+          <Dropdown
+            attributes={availableGraphTypes}
+            selectedValue={graphType}
+            onChange={setGraphType}
+            className="ml-auto"
+          />
+        </div>
 
-        <div className="ml-auto">
+        <div className="sm:mx-auto lg:self-end">
           <Dropdown
             attributes={suitabilityOptions}
             selectedValue={suitabilityFilter}
