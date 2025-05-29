@@ -54,14 +54,7 @@ export default function DataCards({
     setProdFilters({ range: "", speed: "", passengers: "", unit: "" })
   }
 
-  const employeesOptions = useMemo(
-    () =>
-      Array.from(new Set(items.map((it) => it.fields["# of Employees"])))
-        .filter((v) => v != null)
-        .map((v) => String(v))
-        .sort((a, b) => Number(b) - Number(a)),
-    [items]
-  )
+  const employeesOptions = ["11-50", "51-200", "201-499", "500-999", "+1000"]
 
   const makeBuckets = (field) => {
     const vals = items
@@ -219,75 +212,79 @@ export default function DataCards({
               </div>
             </motion.button>
           ) : (
-            <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full">
-              <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
-                <h3>Market Share:</h3>
-                <motion.select
-                  whileHover={{ scale: 1.05 }}
-                  onChange={(e) =>
-                    handleFilterChange("marketShare", e.target.value)
-                  }
-                  value={filters.marketShare}
-                  className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
-                >
-                  <option value="">All</option>
-                  {marketShareBuckets.map((b) => (
-                    <option key={b.label} value={b.label}>
-                      {b.label}
-                    </option>
-                  ))}
-                </motion.select>
+            <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full justify-between">
+              <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
+                  <h3>Market Share:</h3>
+                  <motion.select
+                    whileHover={{ scale: 1.05 }}
+                    onChange={(e) =>
+                      handleFilterChange("marketShare", e.target.value)
+                    }
+                    value={filters.marketShare}
+                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  >
+                    <option value="">All</option>
+                    {marketShareBuckets.map((b) => (
+                      <option key={b.label} value={b.label}>
+                        {b.label}
+                      </option>
+                    ))}
+                  </motion.select>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
+                  <h3>Amount Raised:</h3>
+                  <motion.select
+                    whileHover={{ scale: 1.05 }}
+                    onChange={(e) =>
+                      handleFilterChange("amountRaised", e.target.value)
+                    }
+                    value={filters.amountRaised}
+                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  >
+                    <option value="">All</option>
+                    {amountRaisedBuckets.map((b) => (
+                      <option key={b.label} value={b.label}>
+                        {b.label}
+                      </option>
+                    ))}
+                  </motion.select>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
+                  <h3>Employees:</h3>
+                  <motion.select
+                    whileHover={{ scale: 1.05 }}
+                    onChange={(e) =>
+                      handleFilterChange("employees", e.target.value)
+                    }
+                    value={filters.employees}
+                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  >
+                    <option value="">All</option>
+                    {employeesOptions.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
+                  </motion.select>
+                </div>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
-                <h3>Amount Raised:</h3>
-                <motion.select
+              <div className="flex items-center gap-4">
+                <motion.button
+                  onClick={clearFilters}
+                  className="appearance-none cursor-pointer bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
                   whileHover={{ scale: 1.05 }}
-                  onChange={(e) =>
-                    handleFilterChange("amountRaised", e.target.value)
-                  }
-                  value={filters.amountRaised}
-                  className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
                 >
-                  <option value="">All</option>
-                  {amountRaisedBuckets.map((b) => (
-                    <option key={b.label} value={b.label}>
-                      {b.label}
-                    </option>
-                  ))}
-                </motion.select>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
-                <h3>Employees:</h3>
-                <motion.select
+                  Clear
+                </motion.button>
+                <motion.button
+                  onClick={() => setIsFilterExpanded(false)}
+                  className="text-[#403f4c] focus:outline-none h-fit"
                   whileHover={{ scale: 1.05 }}
-                  onChange={(e) =>
-                    handleFilterChange("employees", e.target.value)
-                  }
-                  value={filters.employees}
-                  className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
                 >
-                  <option value="">All</option>
-                  {employeesOptions.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </motion.select>
+                  <FontAwesomeIcon icon={faTimes} />
+                </motion.button>
               </div>
-              <motion.button
-                onClick={clearFilters}
-                className="appearance-none cursor-pointer bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
-                whileHover={{ scale: 1.05 }}
-              >
-                Clear
-              </motion.button>
-              <motion.button
-                onClick={() => setIsFilterExpanded(false)}
-                className="text-[#403f4c] focus:outline-none h-fit"
-                whileHover={{ scale: 1.05 }}
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </motion.button>
             </motion.div>
           )}
         </motion.div>
@@ -307,93 +304,97 @@ export default function DataCards({
               </div>
             </motion.button>
           ) : (
-            <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full">
-              <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
-                <h3>Range:</h3>
-                <motion.select
-                  whileHover={{ scale: 1.05 }}
-                  onChange={(e) =>
-                    handleProdFilterChange("range", e.target.value)
-                  }
-                  value={prodFilters.range}
-                  className="w-1/2 sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
-                >
-                  <option value="">All</option>
-                  {rangeBuckets.map((b) => (
-                    <option key={b.label} value={b.label}>
-                      {b.label}
-                    </option>
-                  ))}
-                </motion.select>
+            <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full justify-between">
+              <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
+                  <h3>Range:</h3>
+                  <motion.select
+                    whileHover={{ scale: 1.05 }}
+                    onChange={(e) =>
+                      handleProdFilterChange("range", e.target.value)
+                    }
+                    value={prodFilters.range}
+                    className="w-1/2 sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  >
+                    <option value="">All</option>
+                    {rangeBuckets.map((b) => (
+                      <option key={b.label} value={b.label}>
+                        {b.label}
+                      </option>
+                    ))}
+                  </motion.select>
+                </div>
+                <div className="flex gap-4 items-center">
+                  <h3>Speed:</h3>
+                  <motion.select
+                    whileHover={{ scale: 1.05 }}
+                    onChange={(e) =>
+                      handleProdFilterChange("speed", e.target.value)
+                    }
+                    value={prodFilters.speed}
+                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  >
+                    <option value="">All</option>
+                    {speedBuckets.map((b) => (
+                      <option key={b.label} value={b.label}>
+                        {b.label}
+                      </option>
+                    ))}
+                  </motion.select>
+                </div>
+                <div className="flex gap-4 items-center">
+                  <h3>Passengers:</h3>
+                  <motion.select
+                    whileHover={{ scale: 1.05 }}
+                    onChange={(e) =>
+                      handleProdFilterChange("passengers", e.target.value)
+                    }
+                    value={prodFilters.passengers}
+                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  >
+                    <option value="">All</option>
+                    {passengerBuckets.map((b) => (
+                      <option key={b.label} value={b.label}>
+                        {b.label}
+                      </option>
+                    ))}
+                  </motion.select>
+                </div>
+                <div className="flex gap-4 items-center">
+                  <h3>Unit:</h3>
+                  <motion.select
+                    whileHover={{ scale: 1.05 }}
+                    onChange={(e) =>
+                      handleProdFilterChange("unit", e.target.value)
+                    }
+                    value={prodFilters.unit}
+                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  >
+                    <option value="">All</option>
+                    {unitOptions.map((u) => (
+                      <option key={u} value={u}>
+                        {u}
+                      </option>
+                    ))}
+                  </motion.select>
+                </div>
               </div>
-              <div className="flex gap-4 items-center">
-                <h3>Speed:</h3>
-                <motion.select
+              <div className="flex items-center gap-4">
+                <motion.button
+                  onClick={clearProdFilters}
+                  className="appearance-none cursor-pointer bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
                   whileHover={{ scale: 1.05 }}
-                  onChange={(e) =>
-                    handleProdFilterChange("speed", e.target.value)
-                  }
-                  value={prodFilters.speed}
-                  className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
                 >
-                  <option value="">All</option>
-                  {speedBuckets.map((b) => (
-                    <option key={b.label} value={b.label}>
-                      {b.label}
-                    </option>
-                  ))}
-                </motion.select>
-              </div>
-              <div className="flex gap-4 items-center">
-                <h3>Passengers:</h3>
-                <motion.select
+                  Clear
+                </motion.button>
+                <motion.button
+                  onClick={() => setIsFilterExpanded(false)}
+                  className="text-[#403f4c] focus:outline-none h-fit"
                   whileHover={{ scale: 1.05 }}
-                  onChange={(e) =>
-                    handleProdFilterChange("passengers", e.target.value)
-                  }
-                  value={prodFilters.passengers}
-                  className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
                 >
-                  <option value="">All</option>
-                  {passengerBuckets.map((b) => (
-                    <option key={b.label} value={b.label}>
-                      {b.label}
-                    </option>
-                  ))}
-                </motion.select>
+                  <FontAwesomeIcon icon={faTimes} />
+                </motion.button>
               </div>
-              <div className="flex gap-4 items-center">
-                <h3>Unit:</h3>
-                <motion.select
-                  whileHover={{ scale: 1.05 }}
-                  onChange={(e) =>
-                    handleProdFilterChange("unit", e.target.value)
-                  }
-                  value={prodFilters.unit}
-                  className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
-                >
-                  <option value="">All</option>
-                  {unitOptions.map((u) => (
-                    <option key={u} value={u}>
-                      {u}
-                    </option>
-                  ))}
-                </motion.select>
-              </div>
-              <motion.button
-                onClick={clearProdFilters}
-                className="appearance-none cursor-pointer bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
-                whileHover={{ scale: 1.05 }}
-              >
-                Clear Filters
-              </motion.button>
-              <motion.button
-                onClick={() => setIsFilterExpanded(false)}
-                className="text-[#403f4c] focus:outline-none h-fit"
-                whileHover={{ scale: 1.05 }}
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </motion.button>
             </motion.div>
           )}
         </motion.div>
