@@ -4,12 +4,10 @@ import "../common/styles/globals.css"
 
 export const metadata = {
   title: "eVTOL Portal",
-  description:
-    "Next-Gen Strategy Tools for Disruptive Business Models - AAM & eVTOL ecosystems",
+  description: "Tracking the latest developments in the eVTOL space",
   openGraph: {
     title: "eVTOL Portal",
-    description:
-      "Next-Gen Strategy Tools for Disruptive Business Models - AAM & eVTOL ecosystems",
+    description: "Tracking the latest developments in the eVTOL space",
     url: "https://evtolportal.com",
     siteName: "eVTOL Portal",
     type: "website",
@@ -17,8 +15,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "eVTOL Portal",
-    description:
-      "Next-Gen Strategy Tools for Disruptive Business Models - AAM & eVTOL ecosystems",
+    description: "Tracking the latest developments in the eVTOL space",
     site: "@exp_vector",
   },
 }
@@ -69,18 +66,13 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{
             __html: `
               var _iub = _iub || [];
-              _iub.csConfiguration = {
-                "siteId": 3924974,
-                "cookiePolicyId": 73927770,
-                "lang": "en",
-                "storage": { "useSiteId": true }
-              };
+              _iub.csConfiguration = {"siteId":4053596,"cookiePolicyId":46098265,"lang":"en","storage":{"useSiteId":true}};
             `,
           }}
         />
         <Script
           type="text/javascript"
-          src="https://cs.iubenda.com/autoblocking/3924974.js"
+          src="https://cs.iubenda.com/autoblocking/4053596.js"
           strategy="afterInteractive"
         />
         <Script
