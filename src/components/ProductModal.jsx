@@ -1,6 +1,6 @@
 "use client"
 
-import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons"
+import { faCalendarAlt, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
@@ -79,6 +79,46 @@ export default function ProductModal({
                     </p>
                   )}
                 </div>
+
+                {fields["Latest Developments"] && (
+                  <div className="flex flex-col py-4 lg:pt-8">
+                    <h3 className="mb-4 text-xl font-semibold text-[#f5f5f5]">
+                      Latest Developments
+                    </h3>
+                    <div className="w-full bg-[#2f2e38] rounded-lg p-4 lg:p-6 shadow-md">
+                      <ul className="space-y-4">
+                        {fields["Latest Developments"]
+                          .split(";")
+                          .map((entry, index) => {
+                            const trimmedEntry = entry.trim()
+                            const [label, description] = trimmedEntry
+                              .split(" - ")
+                              .map((s) => s.trim())
+
+                            return (
+                              <li
+                                key={index}
+                                className="flex items-start space-x-4 text-base"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faCalendarAlt}
+                                  className="text-[#d87103] text-lg mt-1"
+                                />
+                                <div>
+                                  <p className="font-semibold text-[#ddd] text-base">
+                                    {label}
+                                  </p>
+                                  <p className="text-[#bbb] text-base">
+                                    {description}
+                                  </p>
+                                </div>
+                              </li>
+                            )
+                          })}
+                      </ul>
+                    </div>
+                  </div>
+                )}
 
                 <hr className="border-gray-600" />
 
