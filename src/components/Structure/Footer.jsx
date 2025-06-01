@@ -52,10 +52,10 @@ export default function Footer() {
   return (
     <footer className="bg-[#f5f5f5] px-8 py-8 w-screen overflow-x-hidden">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 text-center lg:text-left">
-          <div className="flex flex-col lg:flex-row items-center gap-4">
-            <Logo />
+        <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-4">
+          <Logo />
 
+          <div className="flex-1 text-center">
             <Typography className="text-sm">
               Powered by{" "}
               <a
@@ -68,28 +68,9 @@ export default function Footer() {
               </a>{" "}
               S.R.O - {currentYear} All Rights Reserved.
             </Typography>
-
-            <div className="flex gap-4">
-              <a
-                href="/files/Privacy_Policy_Exponential_Vector.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline whitespace-nowrap"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="/files/Terms_and_Conditions_Exponential_Vector.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline whitespace-nowrap"
-              >
-                Terms & Conditions
-              </a>
-            </div>
           </div>
 
-          <div className="flex justify-center gap-3">
+          <div className="flex space-x-2">
             {socialPATHS.map(({ name, path, icon }) => (
               <a
                 key={name}
