@@ -17,12 +17,12 @@ function NewsletterPopup({ onClose }) {
           </div>
           <Logo />
           <Typography
-            className="mb-6 mt-10 text-gray-600 text-center"
+            className="mb-6 mt-10 text-gray-600 text-center font-base"
             variant="h4"
           >
             Successfully Subscribed!
           </Typography>
-          <Typography className="text-gray-600 text-center text-lg leading-6">
+          <Typography className="text-gray-600 text-center text-lg leading-6 font-base">
             You have been added to our newsletter! <br /> Stay updated with the
             latest insights.
           </Typography>

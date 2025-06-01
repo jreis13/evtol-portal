@@ -1,6 +1,7 @@
 "use client"
 
 import { IconButton, Typography } from "@material-tailwind/react"
+import Link from "./Link"
 import Logo from "./Logo"
 
 const currentYear = new Date().getFullYear()
@@ -56,7 +57,7 @@ export default function Footer() {
           <Logo />
 
           <div className="flex-1 text-center">
-            <Typography className="text-sm">
+            <Typography className="text-sm font-base">
               Powered by{" "}
               <a
                 href="https://exponentialvector.eu"
@@ -69,6 +70,13 @@ export default function Footer() {
               S.R.O - {currentYear} All Rights Reserved.
             </Typography>
           </div>
+
+          <Typography className="text-sm font-base">
+            <Link to="/PrivacyPolicy.pdf" blank>
+              {" "}
+              Privacy Policy
+            </Link>
+          </Typography>
 
           <div className="flex space-x-2">
             {socialPATHS.map(({ name, path, icon }) => (
