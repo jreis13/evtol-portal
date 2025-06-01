@@ -45,6 +45,7 @@ export default function NewsletterCTA() {
   const [loading, setLoading] = useState(false)
   const [popupVisible, setPopupVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [isChecked, setIsChecked] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -74,7 +75,7 @@ export default function NewsletterCTA() {
 
   return (
     <section className="w-full flex flex-col items-center shadow-lg">
-      <div className="flex flex-col rounded-lg p-8 bg-[#f5f5f5] w-full max-w-2xl">
+      <div className="flex flex-col rounded-lg p-8 bg-[#f5f5f5] w-full max-w-2xl gap-2">
         <h3 className="text-2xl font-semibold">
           Subscribe to Our eVTOL Newsletter
         </h3>
@@ -96,13 +97,24 @@ export default function NewsletterCTA() {
           <button
             type="submit"
             className={`px-6 py-3 bg-[#d87103] text-[#f5f5f5] hover:text-[#403f4c] text-lg font-semibold rounded-lg transition ${
-              loading ? "bg-gray-500 cursor-not-allowed" : ""
+              loading || !isChecked ? "bg-gray-500 cursor-not-allowed" : ""
             }`}
-            disabled={loading}
+            disabled={loading || !isChecked}
           >
             {loading ? "Submitting..." : "Subscribe"}
           </button>
         </form>
+        <label className="flex items-center text-xs">
+          <span className="text-gray-600">
+            By checking the box you agree to receive emails from eVTOL Portal
+          </span>
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            className="ml-2"
+          />
+        </label>
         {errorMessage && (
           <p className="mt-4 text-lg text-red-500">{errorMessage}</p>
         )}
