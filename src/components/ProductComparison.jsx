@@ -106,7 +106,7 @@ export default function ProductComparison({ items = [], config = {} }) {
 
   if (!filteredItems.length) {
     return (
-      <div className="text-center py-8">No items match {suitabilityFilter}</div>
+      <div className="py-8 text-center">No items match {suitabilityFilter}</div>
     )
   }
 
@@ -114,7 +114,7 @@ export default function ProductComparison({ items = [], config = {} }) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col lg:flex-row items-center lg:justify-between lg:w-screen gap-4">
+      <div className="flex flex-col items-center gap-4 lg:w-screen lg:flex-row lg:justify-between">
         <div className="flex gap-4">
           <Dropdown
             attributes={numericAttributes}

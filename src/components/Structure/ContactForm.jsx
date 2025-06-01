@@ -29,10 +29,10 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto mb-20 px-4 lg:px-0">
-      <h2 className="text-4xl font-semibold mb-6 text-[#403f4c]">Contact</h2>
+    <div className="mx-auto mb-20 max-w-7xl px-4 lg:px-0">
+      <h2 className="mb-6 text-4xl font-semibold text-[#403f4c]">Contact</h2>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col md:flex-row gap-4 mb-4">
+        <div className="mb-4 flex flex-col gap-4 md:flex-row">
           <input
             type="text"
             name="name"
@@ -40,7 +40,7 @@ export default function ContactForm() {
             value={form.name}
             onChange={handleChange}
             required
-            className="w-full p-2 border rounded-xl focus:outline-none"
+            className="w-full rounded-xl border p-2 focus:outline-none"
           />
           <input
             type="email"
@@ -49,7 +49,7 @@ export default function ContactForm() {
             value={form.email}
             onChange={handleChange}
             required
-            className="w-full p-2 border rounded-xl focus:outline-none"
+            className="w-full rounded-xl border p-2 focus:outline-none"
           />
         </div>
         <textarea
@@ -58,15 +58,15 @@ export default function ContactForm() {
           value={form.message}
           onChange={handleChange}
           required
-          className="w-full p-2 border rounded-xl focus:outline-none"
+          className="w-full rounded-xl border p-2 focus:outline-none"
         />
         <button
           type="submit"
-          className="bg-[#d87103] text-[#f5f5f5] px-4 py-2 rounded hover:text-[#403f4c] transition duration-300"
+          className="rounded bg-[#d87103] px-4 py-2 text-[#f5f5f5] transition duration-300 hover:text-[#403f4c]"
         >
           Send
         </button>
-        <p className="text-sm mt-2">{status}</p>
+        <p className="mt-2 text-sm">{status}</p>
       </form>
     </div>
   )

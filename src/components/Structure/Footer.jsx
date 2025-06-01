@@ -1,6 +1,6 @@
 "use client"
 
-import { IconButton, Typography } from "@material-tailwind/react"
+import { IconButton } from "@material-tailwind/react"
 import Link from "./Link"
 import Logo from "./Logo"
 
@@ -51,32 +51,32 @@ const socialPATHS = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#f5f5f5] px-8 py-8 w-screen overflow-x-hidden">
+    <footer className="w-screen overflow-x-hidden bg-[#f5f5f5] p-8">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-4">
+        <div className="flex flex-col items-center gap-4 lg:flex-row lg:justify-between">
           <Logo />
 
           <div className="flex-1 text-center">
-            <Typography className="text-sm font-base">
+            <p className="text-sm">
               Powered by{" "}
               <a
                 href="https://exponentialvector.eu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline whitespace-nowrap"
+                className="whitespace-nowrap hover:underline"
               >
                 Exponential Vector
               </a>{" "}
               S.R.O - {currentYear} All Rights Reserved.
-            </Typography>
+            </p>
           </div>
 
-          <Typography className="text-sm font-base">
+          <p className="text-sm">
             <Link to="/PrivacyPolicy.pdf" blank>
               {" "}
               Privacy Policy
             </Link>
-          </Typography>
+          </p>
 
           <div className="flex space-x-2">
             {socialPATHS.map(({ name, path, icon }) => (

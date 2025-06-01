@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import CompanyCard from "./Companies/CompanyCard"
 import CompanyModal from "./Companies/CompanyModal"
 import ProductCard from "./ProductCard"
@@ -56,48 +56,58 @@ export default function DataCards({
 
   const employeesOptions = ["11-50", "51-200", "201-499", "500-999", "+1000"]
 
-  const makeBuckets = (field) => {
-    const vals = items
-      .map((it) => {
-        let raw = it.fields[field] ?? 0
-        if (field === "Amount Raised") {
-          raw = String(raw).replace(/[$,]/g, "")
-        }
-        const num = Number(raw)
-        return isNaN(num) ? 0 : num
-      })
-      .sort((a, b) => a - b)
-    if (!vals.length) return []
-    const min = vals[0]
-    const max = vals[vals.length - 1]
-    const step = Math.ceil((max - min) / 5) || 1
-    const buckets = []
-    for (let start = min; start <= max; start += step) {
-      buckets.push({
-        label: `${start} - ${start + step}`,
-        min: start,
-        max: start + step,
-      })
-    }
-    return buckets
-  }
+  const makeBuckets = useCallback(
+    (field) => {
+      const vals = items
+        .map((it) => {
+          let raw = it.fields[field] ?? 0
+          if (field === "Amount Raised") {
+            raw = String(raw).replace(/[$,]/g, "")
+          }
+          const num = Number(raw)
+          return isNaN(num) ? 0 : num
+        })
+        .sort((a, b) => a - b)
+      if (!vals.length) return []
+      const min = vals[0]
+      const max = vals[vals.length - 1]
+      const step = Math.ceil((max - min) / 5) || 1
+      const buckets = []
+      for (let start = min; start <= max; start += step) {
+        buckets.push({
+          label: `${start} - ${start + step}`,
+          min: start,
+          max: start + step,
+        })
+      }
+      return buckets
+    },
+    [items]
+  )
 
   const marketShareBuckets = useMemo(
     () => makeBuckets("Market Share (%)"),
-    [items]
+    [makeBuckets]
   )
-  const amountRaisedBuckets = [
-    { label: "$1 – $10 M", min: 1, max: 10_000_000 },
-    { label: "$10 M – $100 M", min: 10_000_000, max: 100_000_000 },
-    { label: "$100 M – $1 B", min: 100_000_000, max: 1_000_000_000 },
-    { label: "> $1 B", min: 1_000_000_000, max: Infinity },
-  ]
-  const rangeBuckets = useMemo(() => makeBuckets("Range (KM)"), [items])
-  const speedBuckets = useMemo(() => makeBuckets("Top Speed (KM/h)"), [items])
+  const amountRaisedBuckets = useMemo(
+    () => [
+      { label: "$1 – $10 M", min: 1, max: 10_000_000 },
+      { label: "$10 M – $100 M", min: 10_000_000, max: 100_000_000 },
+      { label: "$100 M – $1 B", min: 100_000_000, max: 1_000_000_000 },
+      { label: "> $1 B", min: 1_000_000_000, max: Infinity },
+    ],
+    []
+  )
+  const rangeBuckets = useMemo(() => makeBuckets("Range (KM)"), [makeBuckets])
+  const speedBuckets = useMemo(
+    () => makeBuckets("Top Speed (KM/h)"),
+    [makeBuckets]
+  )
   const passengerBuckets = useMemo(
     () => makeBuckets("Passenger Capacity"),
-    [items]
+    [makeBuckets]
   )
+
   const unitOptions = useMemo(
     () =>
       Array.from(new Set(items.map((it) => it.fields["Unit"]))).filter(
@@ -195,15 +205,15 @@ export default function DataCards({
   const [isFilterExpanded, setIsFilterExpanded] = useState(false)
 
   return (
-    <div className="max-w-7xl mx-auto mb-20 relative">
-      <h2 className="text-4xl font-semibold mb-6 text-[#403f4c]">{title}</h2>
+    <div className="relative mx-auto mb-20 max-w-7xl">
+      <h2 className="mb-6 text-4xl font-semibold text-[#403f4c]">{title}</h2>
 
       {isCompanySection && (
-        <motion.div className="relative flex justify-center sm:justify-end mb-4 px-4 sm:px-0">
+        <motion.div className="relative mb-4 flex justify-center px-4 sm:justify-end sm:px-0">
           {!isFilterExpanded ? (
             <motion.button
               onClick={() => setIsFilterExpanded(true)}
-              className="bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+              className="rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none"
               whileHover={{ scale: 1.05 }}
             >
               <div className="flex items-center gap-2">
@@ -212,8 +222,8 @@ export default function DataCards({
               </div>
             </motion.button>
           ) : (
-            <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full justify-between">
-              <div className="flex flex-col lg:flex-row gap-4">
+            <motion.div className="flex w-full flex-col flex-wrap items-center justify-between gap-4 sm:flex-row">
+              <div className="flex flex-col gap-4 lg:flex-row">
                 {/* <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
                   <h3>Market Share:</h3>
                   <motion.select
@@ -232,7 +242,7 @@ export default function DataCards({
                     ))}
                   </motion.select>
                 </div> */}
-                <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
+                <div className="flex w-full flex-col items-center gap-2 sm:w-auto sm:flex-row">
                   <h3>Amount Raised:</h3>
                   <motion.select
                     whileHover={{ scale: 1.05 }}
@@ -240,7 +250,7 @@ export default function DataCards({
                       handleFilterChange("amountRaised", e.target.value)
                     }
                     value={filters.amountRaised}
-                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                    className="w-full max-w-xs rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none sm:w-auto"
                   >
                     <option value="">All</option>
                     {amountRaisedBuckets.map((b) => (
@@ -250,7 +260,7 @@ export default function DataCards({
                     ))}
                   </motion.select>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
+                <div className="flex w-full flex-col items-center gap-2 sm:w-auto sm:flex-row">
                   <h3>Employees:</h3>
                   <motion.select
                     whileHover={{ scale: 1.05 }}
@@ -258,7 +268,7 @@ export default function DataCards({
                       handleFilterChange("employees", e.target.value)
                     }
                     value={filters.employees}
-                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                    className="w-full max-w-xs rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none sm:w-auto"
                   >
                     <option value="">All</option>
                     {employeesOptions.map((opt) => (
@@ -272,14 +282,14 @@ export default function DataCards({
               <div className="flex items-center gap-4">
                 <motion.button
                   onClick={clearFilters}
-                  className="appearance-none cursor-pointer bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  className="cursor-pointer appearance-none rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none"
                   whileHover={{ scale: 1.05 }}
                 >
                   Clear
                 </motion.button>
                 <motion.button
                   onClick={() => setIsFilterExpanded(false)}
-                  className="text-[#403f4c] focus:outline-none h-fit"
+                  className="h-fit text-[#403f4c] focus:outline-none"
                   whileHover={{ scale: 1.05 }}
                 >
                   <FontAwesomeIcon icon={faTimes} />
@@ -291,11 +301,11 @@ export default function DataCards({
       )}
 
       {isModelSection && (
-        <motion.div className="relative flex justify-center sm:justify-end mb-4 px-4 sm:px-0">
+        <motion.div className="relative mb-4 flex justify-center px-4 sm:justify-end sm:px-0">
           {!isFilterExpanded ? (
             <motion.button
               onClick={() => setIsFilterExpanded(true)}
-              className="bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+              className="rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none"
               whileHover={{ scale: 1.05 }}
             >
               <div className="flex items-center gap-2">
@@ -304,9 +314,9 @@ export default function DataCards({
               </div>
             </motion.button>
           ) : (
-            <motion.div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center w-full justify-between">
-              <div className="flex flex-col lg:flex-row gap-4">
-                <div className="flex flex-col sm:flex-row gap-2 items-center w-full sm:w-auto">
+            <motion.div className="flex w-full flex-col flex-wrap items-center justify-between gap-4 sm:flex-row">
+              <div className="flex flex-col gap-4 lg:flex-row">
+                <div className="flex w-full flex-col items-center gap-2 sm:w-auto sm:flex-row">
                   <h3>Range:</h3>
                   <motion.select
                     whileHover={{ scale: 1.05 }}
@@ -314,7 +324,7 @@ export default function DataCards({
                       handleProdFilterChange("range", e.target.value)
                     }
                     value={prodFilters.range}
-                    className="w-1/2 sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                    className="w-1/2 max-w-xs rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none sm:w-auto"
                   >
                     <option value="">All</option>
                     {rangeBuckets.map((b) => (
@@ -324,7 +334,7 @@ export default function DataCards({
                     ))}
                   </motion.select>
                 </div>
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   <h3>Speed:</h3>
                   <motion.select
                     whileHover={{ scale: 1.05 }}
@@ -332,7 +342,7 @@ export default function DataCards({
                       handleProdFilterChange("speed", e.target.value)
                     }
                     value={prodFilters.speed}
-                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                    className="w-full max-w-xs rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none sm:w-auto"
                   >
                     <option value="">All</option>
                     {speedBuckets.map((b) => (
@@ -342,7 +352,7 @@ export default function DataCards({
                     ))}
                   </motion.select>
                 </div>
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   <h3>Passengers:</h3>
                   <motion.select
                     whileHover={{ scale: 1.05 }}
@@ -350,7 +360,7 @@ export default function DataCards({
                       handleProdFilterChange("passengers", e.target.value)
                     }
                     value={prodFilters.passengers}
-                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                    className="w-full max-w-xs rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none sm:w-auto"
                   >
                     <option value="">All</option>
                     {passengerBuckets.map((b) => (
@@ -360,7 +370,7 @@ export default function DataCards({
                     ))}
                   </motion.select>
                 </div>
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   <h3>Unit:</h3>
                   <motion.select
                     whileHover={{ scale: 1.05 }}
@@ -368,7 +378,7 @@ export default function DataCards({
                       handleProdFilterChange("unit", e.target.value)
                     }
                     value={prodFilters.unit}
-                    className="w-full sm:w-auto max-w-xs bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                    className="w-full max-w-xs rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none sm:w-auto"
                   >
                     <option value="">All</option>
                     {unitOptions.map((u) => (
@@ -382,14 +392,14 @@ export default function DataCards({
               <div className="flex items-center gap-4">
                 <motion.button
                   onClick={clearProdFilters}
-                  className="appearance-none cursor-pointer bg-[#34333d] text-[#e8e8e8] rounded-lg px-4 py-2 focus:outline-none"
+                  className="cursor-pointer appearance-none rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none"
                   whileHover={{ scale: 1.05 }}
                 >
                   Clear
                 </motion.button>
                 <motion.button
                   onClick={() => setIsFilterExpanded(false)}
-                  className="text-[#403f4c] focus:outline-none h-fit"
+                  className="h-fit text-[#403f4c] focus:outline-none"
                   whileHover={{ scale: 1.05 }}
                 >
                   <FontAwesomeIcon icon={faTimes} />
@@ -404,12 +414,12 @@ export default function DataCards({
         {currentIndex > 0 && (
           <button
             onClick={handlePrev}
-            className="absolute -left-0 top-1/2 transform -translate-y-1/2 z-10 text-3xl py-2"
+            className="absolute -left-0 top-1/2 z-10 -translate-y-1/2 py-2 text-3xl"
           >
             <FontAwesomeIcon icon={faArrowCircleLeft} />
           </button>
         )}
-        <div className="max-w-7xl mx-auto flex justify-center">
+        <div className="mx-auto flex max-w-7xl justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={
@@ -421,12 +431,12 @@ export default function DataCards({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch px-4"
+              className="grid grid-cols-1 items-stretch gap-4 px-4 lg:grid-cols-3"
             >
               {visibleItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-shrink-0 lg:w-[400px] cursor-pointer"
+                  className="shrink-0 cursor-pointer lg:w-[400px]"
                   onClick={() => setSelectedItem(item)}
                 >
                   {isCompanySection ? (
@@ -450,7 +460,7 @@ export default function DataCards({
         {currentIndex + visibleCount < total && (
           <button
             onClick={handleNext}
-            className="absolute -right-0 top-1/2 transform -translate-y-1/2 z-10 text-3xl py-2"
+            className="absolute -right-0 top-1/2 z-10 -translate-y-1/2 py-2 text-3xl"
           >
             <FontAwesomeIcon icon={faArrowCircleRight} />
           </button>

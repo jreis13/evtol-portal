@@ -116,13 +116,13 @@ export default function DataTable({
   })
 
   return (
-    <div className="max-w-7xl mx-auto mb-20">
-      <h2 className="text-4xl font-semibold mb-6 text-[#403f4c]">{title}</h2>
+    <div className="mx-auto mb-20 max-w-7xl">
+      <h2 className="mb-6 text-4xl font-semibold text-[#403f4c]">{title}</h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+      <div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {filterKeys.map((key) => (
           <div key={key}>
-            <label className="block text-sm font-medium text-[#403f4c] mb-1">
+            <label className="mb-1 block text-sm font-medium text-[#403f4c]">
               {key === "Order Date Range" ? "Order Date" : key}
             </label>
             <select
@@ -146,21 +146,21 @@ export default function DataTable({
         ))}
       </div>
 
-      <div className="relative rounded-xl bg-[#f5f5f5] text-[#34333d] overflow-x-auto scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-500 pb-4">
+      <div className="scrollbar-thin relative overflow-x-auto rounded-xl bg-[#f5f5f5] pb-4 text-[#34333d]">
+        {" "}
         {blurred && (
-          <div className="absolute inset-0 z-10 bg-[#f5f5f5]/80 backdrop-blur-sm flex items-center justify-center">
-            <div className="text-center px-4">
-              <p className="text-[#403f4c] font-semibold mb-2">
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#f5f5f5]/80 backdrop-blur-sm">
+            <div className="px-4 text-center">
+              <p className="mb-2 font-semibold text-[#403f4c]">
                 This table is only available to Pro users.
               </p>
-              <button className="bg-[#d87103] duration-300 hover:text-[#403f4c] text-[#f5f5f5] px-5 py-2 rounded-md font-medium transition">
+              <button className="rounded-md bg-[#d87103] px-5 py-2 font-medium text-[#f5f5f5] transition duration-300 hover:text-[#403f4c]">
                 Upgrade Now
               </button>
             </div>
           </div>
         )}
-
-        <table className="min-w-full border table-auto rounded-xl text-sm text-[#403f4c]">
+        <table className="min-w-full table-auto rounded-xl border text-sm text-[#403f4c]">
           <thead className="bg-[#eaeaea] text-left text-xs uppercase tracking-wide">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>

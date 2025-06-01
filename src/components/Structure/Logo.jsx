@@ -26,10 +26,10 @@ export default function Logo() {
             src="/portal.png"
             width={300}
             height={300}
-            className="w-20 h-20"
+            className="size-20"
           />
 
-          <h2 className="text-4xl group-hover:text-[#d87103] duration-300">
+          <h2 className="text-4xl duration-300 group-hover:text-[#d87103]">
             eVTOL Portal
           </h2>
         </a>
@@ -40,7 +40,7 @@ export default function Logo() {
             src="/portal.png"
             width={300}
             height={300}
-            className="object-contain w-20 h-20 p-2"
+            className="size-20 object-contain p-2"
           />
         </a>
       )}

@@ -53,7 +53,7 @@ export default function Layout() {
   )
 
   return (
-    <div className="relative flex flex-col w-full overflow-x-hidden">
+    <div className="relative flex w-full flex-col overflow-x-hidden">
       <Header />
       <div id="hero">
         <MainHero />

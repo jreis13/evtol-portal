@@ -14,10 +14,10 @@ export default function CompanyCard({ item, onClick, config }) {
   } = item.fields
 
   return (
-    <div className="relative group w-full bg-[#f5f5f5] text-[#403f4c] rounded-xl shadow-md p-8 cursor-pointer hover:bg-[#403f4c] transition-all h-full flex flex-col">
+    <div className="group relative flex size-full cursor-pointer flex-col rounded-xl bg-[#f5f5f5] p-8 text-[#403f4c] shadow-md transition-all hover:bg-[#403f4c]">
       <button
         onClick={() => onClick?.(item)}
-        className="rounded-md h-[50px] w-[50px] absolute right-2"
+        className="absolute right-2 size-[50px] rounded-md"
       >
         <Image
           src={"/icons/click-icon.svg"}
@@ -26,15 +26,15 @@ export default function CompanyCard({ item, onClick, config }) {
           height={1000}
         />
       </button>
-      <div className="flex items-center mb-4">
+      <div className="mb-4 flex items-center">
         {logo && (
-          <div className="gap-4 mb-6 flex items-center">
+          <div className="mb-6 flex items-center gap-4">
             <Image
               src={logo}
               alt={name}
               width={1000}
               height={1000}
-              className="rounded-md object-contain h-[70px] w-[70px]"
+              className="size-[70px] rounded-md object-contain"
             />
             <h3 className="text-xl font-semibold group-hover:text-[#f5f5f5]">
               {name}
@@ -43,7 +43,7 @@ export default function CompanyCard({ item, onClick, config }) {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4 text-sm mb-4 group-hover:text-[#f5f5f5]">
+      <div className="mb-4 grid grid-cols-2 gap-4 text-sm group-hover:text-[#f5f5f5]">
         {raised && (
           <div>
             <div className="font-medium">Amount Raised</div>
@@ -71,11 +71,11 @@ export default function CompanyCard({ item, onClick, config }) {
       </div>
       {Number.isFinite(+marketShare) && (
         <div className="mb-4 group-hover:text-[#f5f5f5]">
-          <div className="flex justify-between text-sm mb-1">
+          <div className="mb-1 flex justify-between text-sm">
             <span>Market Share:</span>
             <span>{marketShare}%</span>
           </div>
-          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div className="h-2 overflow-hidden rounded-full bg-gray-200">
             <div
               className="h-full bg-[#d87103]"
               style={{ width: `${marketShare}%` }}

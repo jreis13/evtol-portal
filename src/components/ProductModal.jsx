@@ -35,7 +35,7 @@ export default function ProductModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 lg:px-0"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 lg:px-0"
           onClick={onClose}
         >
           <motion.div
@@ -45,36 +45,36 @@ export default function ProductModal({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="bg-[#34333d] text-[#f5f5f5] rounded-lg shadow-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto pr-4 p-6 relative scrollbar-thin flex flex-col"
+            className="scrollbar-thin relative flex max-h-[90vh] w-full max-w-6xl flex-col overflow-y-auto rounded-lg bg-[#34333d] p-6 pr-4 text-[#f5f5f5] shadow-lg"
           >
             <button
               onClick={onClose}
-              className="sticky top-0 ml-auto z-10 text-[#d87103] text-3xl font-semibold"
+              className="sticky top-0 z-10 ml-auto text-3xl font-semibold text-[#d87103]"
             >
               <FontAwesomeIcon
                 icon={faXmarkCircle}
-                className="text-[#d87103] hover:text-[#f5f5f5] transition-all duration-200"
+                className="text-[#d87103] transition-all duration-200 hover:text-[#f5f5f5]"
                 size="sm"
               />
             </button>
-            <div className="flex flex-col lg:flex-row items-center gap-10">
-              <div className="flex-shrink-0 w-full lg:w-1/2">
+            <div className="flex flex-col items-center gap-10 lg:flex-row">
+              <div className="w-full shrink-0 lg:w-1/2">
                 <Image
                   src={fields["Product Image"] || "/portal.png"}
                   alt={fields.Name}
                   width={1000}
                   height={1000}
-                  className="rounded object-contain w-full h-auto"
+                  className="h-auto w-full rounded object-contain"
                 />
               </div>
 
-              <div className="flex flex-col gap-4 w-full lg:w-1/2">
+              <div className="flex w-full flex-col gap-4 lg:w-1/2">
                 <div>
-                  <h2 className="text-3xl font-semibold mb-2 text-[#f5f5f5]">
+                  <h2 className="mb-2 text-3xl font-semibold text-[#f5f5f5]">
                     {fields.Name}
                   </h2>
                   {fields["Description "] && (
-                    <p className="text-[#ddd] leading-relaxed text-lg">
+                    <p className="text-lg leading-relaxed text-[#ddd]">
                       {fields["Description "]}
                     </p>
                   )}
@@ -85,7 +85,7 @@ export default function ProductModal({
                     <h3 className="mb-4 text-xl font-semibold text-[#f5f5f5]">
                       Latest Developments
                     </h3>
-                    <div className="w-full bg-[#2f2e38] rounded-lg p-4 lg:p-6 shadow-md">
+                    <div className="w-full rounded-lg bg-[#2f2e38] p-4 shadow-md lg:p-6">
                       <ul className="space-y-4">
                         {fields["Latest Developments"]
                           .split(";")
@@ -102,13 +102,13 @@ export default function ProductModal({
                               >
                                 <FontAwesomeIcon
                                   icon={faCalendarAlt}
-                                  className="text-[#d87103] text-lg mt-1"
+                                  className="mt-1 text-lg text-[#d87103]"
                                 />
                                 <div>
-                                  <p className="font-semibold text-[#ddd] text-base">
+                                  <p className="text-base font-semibold text-[#ddd]">
                                     {label}
                                   </p>
-                                  <p className="text-[#bbb] text-base">
+                                  <p className="text-base text-[#bbb]">
                                     {description}
                                   </p>
                                 </div>
@@ -122,14 +122,14 @@ export default function ProductModal({
 
                 <hr className="border-gray-600" />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-sm">
+                <div className="grid grid-cols-1 gap-x-8 gap-y-4 text-sm sm:grid-cols-2">
                   {fieldsToDisplay.map((field) => (
                     <React.Fragment key={field}>
                       <div>
-                        <p className="text-sm font-semibold text-[#f5f5f5] mb-1">
+                        <p className="mb-1 text-sm font-semibold text-[#f5f5f5]">
                           {field.replace(/\s?\(.*?\)/, "")}:
                         </p>
-                        <p className="text-[#ccc] text-base">
+                        <p className="text-base text-[#ccc]">
                           {fields[field] || "—"}
                         </p>
                       </div>

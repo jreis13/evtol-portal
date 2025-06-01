@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 
-const ScrollReveal = ({ children, className, isFirst, isLast, ...props }) => {
+const ScrollReveal = ({ children, className, isFirst, ...props }) => {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768
 
   return (

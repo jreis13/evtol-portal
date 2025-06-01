@@ -31,10 +31,10 @@ export default function ProductCard({ item, onClick, config = {} }) {
   const totalValue = parseNumber(item.fields[totalField])
 
   return (
-    <div className="relative group w-full bg-[#f5f5f5] text-[#403f4c] rounded-xl shadow-md p-8 cursor-pointer hover:bg-[#403f4c] transition-all h-full flex flex-col justify-between">
+    <div className="group relative flex size-full cursor-pointer flex-col justify-between rounded-xl bg-[#f5f5f5] p-8 text-[#403f4c] shadow-md transition-all hover:bg-[#403f4c]">
       <button
         onClick={() => onClick?.(item)}
-        className="rounded-md h-[50px] w-[50px] absolute right-2"
+        className="absolute right-2 size-[50px] rounded-md"
       >
         <Image
           src={"/icons/click-icon.svg"}
@@ -44,9 +44,9 @@ export default function ProductCard({ item, onClick, config = {} }) {
         />
       </button>
 
-      <div className="flex mb-4 flex-col">
-        <div className="flex items-center gap-4 min-h-[70px]">
-          <div className="w-[70px] h-[70px] flex items-center justify-center">
+      <div className="mb-4 flex flex-col">
+        <div className="flex min-h-[70px] items-center gap-4">
+          <div className="flex size-[70px] items-center justify-center">
             <Image
               src={imageSrc}
               alt={item.fields[name] || name}
@@ -60,14 +60,14 @@ export default function ProductCard({ item, onClick, config = {} }) {
           </h3>
         </div>
         {item.fields[unit] && (
-          <div className="group-hover:text-[#f5f5f5] mx-auto bg-[#d87103] p-1 rounded-full border border-[#403f4c] group-hover:border-[#f5f5f5] mt-2">
+          <div className="mx-auto mt-2 rounded-full border border-[#403f4c] bg-[#d87103] p-1 group-hover:border-[#f5f5f5] group-hover:text-[#f5f5f5]">
             <span className="text-xs">{item.fields[unit]}</span>
           </div>
         )}
       </div>
 
-      <div className="flex flex-col gap-6 mb-4">
-        <div className="w-full flex justify-between">
+      <div className="mb-4 flex flex-col gap-6">
+        <div className="flex w-full justify-between">
           {rangeValue > 0 && (
             <div className="flex flex-col items-center text-[#403f4c] group-hover:text-[#f5f5f5]">
               <StatGauge
@@ -75,7 +75,7 @@ export default function ProductCard({ item, onClick, config = {} }) {
                 max={maxRange}
                 textColor="currentColor"
               />
-              <div className="mt-4 text-sm text-center">
+              <div className="mt-4 text-center text-sm">
                 <div className="font-medium">Range</div>
                 <div>{item.fields[rangeField]}</div>
               </div>
@@ -89,7 +89,7 @@ export default function ProductCard({ item, onClick, config = {} }) {
                 max={maxSpeed}
                 textColor="currentColor"
               />
-              <div className="mt-4 text-sm text-center">
+              <div className="mt-4 text-center text-sm">
                 <div className="font-medium">Top Speed</div>
                 <div>{item.fields[speedField]}</div>
               </div>
@@ -97,11 +97,11 @@ export default function ProductCard({ item, onClick, config = {} }) {
           )}
         </div>
 
-        <div className="w-full flex flex-col justify-between gap-4">
+        <div className="flex w-full flex-col justify-between gap-4">
           {passengerValue > 0 && (
             <div className="flex flex-col items-center text-[#403f4c] group-hover:text-[#f5f5f5]">
               <StatBar value={passengerValue} max={maxPassengers} />
-              <div className="mt-4 text-sm text-center">
+              <div className="mt-4 text-center text-sm">
                 <div className="font-medium">Passenger Capacity</div>
                 <div>{item.fields[passengerField]}</div>
               </div>
@@ -111,7 +111,7 @@ export default function ProductCard({ item, onClick, config = {} }) {
           {totalValue > 0 && (
             <div className="flex flex-col items-center text-[#403f4c] group-hover:text-[#f5f5f5]">
               <StatBar value={totalValue} max={maxPassengers} />
-              <div className="mt-4 text-sm text-center">
+              <div className="mt-4 text-center text-sm">
                 <div className="font-medium">Total Capacity</div>
                 <div>{item.fields[totalField]}</div>
               </div>
@@ -123,8 +123,8 @@ export default function ProductCard({ item, onClick, config = {} }) {
       {item.fields[stageField] && (
         <div className="text-center">
           <p className="text-sm group-hover:text-[#f5f5f5]">Stage</p>
-          <div className="h-[1px] bg-[#403f4c] rounded-full my-2 group-hover:bg-[#f5f5f5]" />
-          <div className="inline-block bg-[#d87103] px-3 py-1 rounded-full text-xs group-hover:text-[#f5f5f5]">
+          <div className="my-2 h-px rounded-full bg-[#403f4c] group-hover:bg-[#f5f5f5]" />
+          <div className="inline-block rounded-full bg-[#d87103] px-3 py-1 text-xs group-hover:text-[#f5f5f5]">
             {item.fields[stageField]}
           </div>
         </div>

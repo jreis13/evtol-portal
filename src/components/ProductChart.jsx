@@ -285,7 +285,7 @@ export default function ProductChart({
 
   return (
     <div>
-      <div className="text-center text-sm font-medium mb-2">
+      <div className="mb-2 text-center text-sm font-medium">
         {`Average ${xLabel}: ${avgX.toFixed(0)}${
           yData?.length ? `, Average ${yLabel}: ${avgY.toFixed(0)}` : ""
         }`}

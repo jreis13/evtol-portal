@@ -1,35 +1,32 @@
 "use client"
 
-import { Card, CardBody, Typography } from "@material-tailwind/react"
+import { Card, CardBody } from "@material-tailwind/react"
 import { useState } from "react"
 import Logo from "./Structure/Logo"
 
 function NewsletterPopup({ onClose }) {
   return (
     <div
-      className="fixed inset-0 flex justify-center items-center z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       onClick={onClose}
     >
       <Card onClick={(e) => e.stopPropagation()}>
         <CardBody className="w-full">
           <div className="flex justify-center">
-            <i className="fa-solid fa-check text-3xl text-gray-600"></i>
+            <i className="text-3xl text-gray-600"></i>
           </div>
           <Logo />
-          <Typography
-            className="mb-6 mt-10 text-gray-600 text-center font-base"
-            variant="h4"
-          >
+          <p className="mb-6 mt-10 text-center text-gray-600">
             Successfully Subscribed!
-          </Typography>
-          <Typography className="text-gray-600 text-center text-lg leading-6 font-base">
+          </p>
+          <p className="text-center text-lg leading-6 text-gray-600">
             You have been added to our newsletter! <br /> Stay updated with the
             latest insights.
-          </Typography>
+          </p>
           <div className="mt-6 flex justify-center">
             <button
               onClick={onClose}
-              className="px-6 py-2 bg-[#d87103] text-white rounded-lg"
+              className="rounded-lg bg-[#d87103] px-6 py-2 text-white"
             >
               Close
             </button>
@@ -74,30 +71,30 @@ export default function NewsletterCTA() {
   }
 
   return (
-    <section className="w-full flex flex-col items-center shadow-lg">
-      <div className="flex flex-col rounded-lg p-8 bg-[#f5f5f5] w-full max-w-2xl gap-2">
+    <section className="flex w-full flex-col items-center shadow-lg">
+      <div className="flex w-full max-w-2xl flex-col gap-2 rounded-lg bg-[#f5f5f5] p-8">
         <h3 className="text-2xl font-semibold">
           Subscribe to Our eVTOL Newsletter
         </h3>
-        <p className="text-gray-600 mt-4">
+        <p className="mt-4 text-gray-600">
           Stay informed with the latest developments and insights.
         </p>
         <form
           onSubmit={handleSubmit}
-          className="mt-6 flex flex-col sm:flex-row gap-4 items-center"
+          className="mt-6 flex flex-col items-center gap-4 sm:flex-row"
         >
           <input
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-lg lg:w-[300px] border border-gray-600 px-4 py-2 focus:outline-none"
+            className="rounded-lg border border-gray-600 px-4 py-2 focus:outline-none lg:w-[300px]"
             required
           />
           <button
             type="submit"
-            className={`px-6 py-3 bg-[#d87103] text-[#f5f5f5] hover:text-[#403f4c] text-lg font-semibold rounded-lg transition ${
-              loading || !isChecked ? "bg-gray-500 cursor-not-allowed" : ""
+            className={`rounded-lg bg-[#d87103] px-6 py-3 text-lg font-semibold text-[#f5f5f5] transition hover:text-[#403f4c] ${
+              loading || !isChecked ? "cursor-not-allowed bg-gray-500" : ""
             }`}
             disabled={loading || !isChecked}
           >

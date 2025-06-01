@@ -36,7 +36,7 @@ export default function CompanyModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 lg:px-0"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 lg:px-0"
           onClick={onClose}
         >
           <motion.div
@@ -46,59 +46,59 @@ export default function CompanyModal({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="bg-[#34333d] text-[#f5f5f5] rounded-lg shadow-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto pr-4 p-6 relative scrollbar-thin flex flex-col"
+            className="scrollbar-thin relative flex max-h-[90vh] w-full max-w-6xl flex-col overflow-y-auto rounded-lg bg-[#34333d] p-6 pr-4 text-[#f5f5f5] shadow-lg"
           >
             <button
               onClick={onClose}
-              className="sticky top-0 ml-auto z-10 text-[#d87103] text-3xl font-semibold"
+              className="sticky top-0 z-10 ml-auto text-3xl font-semibold text-[#d87103]"
             >
               <FontAwesomeIcon
                 icon={faXmarkCircle}
-                className="text-[#d87103] hover:text-[#f5f5f5] transition-all duration-200"
+                className="text-[#d87103] transition-all duration-200 hover:text-[#f5f5f5]"
                 size="sm"
               />
             </button>
 
-            <div className="flex align-center items-center mb-6 gap-4">
+            <div className="mb-6 flex place-items-center gap-4">
               {fields.Logo && (
                 <Image
                   src={fields.Logo}
                   alt={fields["Company Name"] || fields.Name}
                   width={1000}
                   height={1000}
-                  className="object-contain w-20 h-20"
+                  className="size-20 object-contain"
                 />
               )}
 
-              <h2 className="text-2xl font-semibold mb-2 text-[#f5f5f5]">
+              <h2 className="mb-2 text-2xl font-semibold text-[#f5f5f5]">
                 {fields["Company Name"] || fields.Name}
               </h2>
             </div>
 
             <div className="flex flex-col">
               {fields["Company Summary"] || fields["Description "] ? (
-                <p className="text-[#ddd] mb-4">
+                <p className="mb-4 text-[#ddd]">
                   {fields["Company Summary"] || fields["Description "]}
                 </p>
               ) : null}
 
               {fields["Last Update"] && (
-                <div className="text-sm text-[#ccc] mb-6">
+                <div className="mb-6 text-sm text-[#ccc]">
                   Last Update:{" "}
                   <span className="font-medium">{fields["Last Update"]}</span>
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
+              <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {mainStatsFields.map((field) => (
                   <div
                     key={field}
-                    className="bg-[#2f2f38] rounded-lg p-4 text-sm"
+                    className="rounded-lg bg-[#2f2f38] p-4 text-sm"
                   >
-                    <p className="text-[#ddd] text-md">
+                    <p className="text-base text-[#ddd]">
                       {field.replace(/\s?\(.*?\)/, "")}
                     </p>
-                    <p className="text-[#bbb] text-lg">
+                    <p className="text-lg text-[#bbb]">
                       {fields[field] || "—"}
                     </p>
                   </div>
@@ -110,7 +110,7 @@ export default function CompanyModal({
                   <h3 className="mb-4 text-xl font-semibold text-[#f5f5f5]">
                     Latest Developments
                   </h3>
-                  <div className="w-full bg-[#2f2e38] rounded-lg p-4 lg:p-6 shadow-md">
+                  <div className="w-full rounded-lg bg-[#2f2e38] p-4 shadow-md lg:p-6">
                     <ul className="space-y-4">
                       {fields["Latest Developments"]
                         .split(";")
@@ -127,7 +127,7 @@ export default function CompanyModal({
                             >
                               <FontAwesomeIcon
                                 icon={faCalendarAlt}
-                                className="text-[#d87103] text-lg mt-1"
+                                className="mt-1 text-lg text-[#d87103]"
                               />
                               <div>
                                 <p className="font-semibold text-[#ddd]">
@@ -149,7 +149,7 @@ export default function CompanyModal({
                     Founding Team
                   </h3>
                   <div
-                    className={`w-full bg-[#2f2e38] rounded-lg p-4 lg:p-6 shadow-md grid gap-4 ${
+                    className={`grid w-full gap-4 rounded-lg bg-[#2f2e38] p-4 shadow-md lg:p-6 ${
                       fields["Founding Team"].length === 1
                         ? "grid-cols-1"
                         : fields["Founding Team"].length === 3
@@ -165,14 +165,14 @@ export default function CompanyModal({
                           alt={entry.split(" - ")[0]}
                           width={1000}
                           height={1000}
-                          className="object-contain w-16 h-16 rounded-full mx-auto"
+                          className="mx-auto size-16 rounded-full object-contain"
                         />
                         <p
                           key={index}
-                          className="text-[#ddd] text-lg text-center"
+                          className="text-center text-lg text-[#ddd]"
                         >
                           {entry.split(" - ")[0]} <br />{" "}
-                          <span className="text-md text-[#bbb]">
+                          <span className="text-base text-[#bbb]">
                             {entry.split(" - ")[1]}
                           </span>
                           <br />

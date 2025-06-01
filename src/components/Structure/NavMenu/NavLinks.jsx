@@ -31,9 +31,7 @@ export default function NavLinks({ paths, isDesktop }) {
                     {icon}
                   </a>
                 ) : (
-                  <Link to={path}>
-                    <span className="nav-link">{name}</span>
-                  </Link>
+                  <Link to={path}>{name}</Link>
                 )}
               </li>
             ))}

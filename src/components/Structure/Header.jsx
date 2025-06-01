@@ -23,13 +23,11 @@ const PATHS = [
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false)
-  const [isDesktop, setIsDesktop] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const updateMedia = () => {
       const isNowDesktop = window.innerWidth >= 960
-      setIsDesktop(isNowDesktop)
       if (isNowDesktop) setOpenNav(false)
     }
 
@@ -53,20 +51,20 @@ export default function Header() {
         shadow={false}
         color="transparent"
         fullWidth
-        className={`fixed top-0 left-0 w-full z-50 border-0 h-16 lg:h-20 flex items-center transition-colors duration-300 ${
+        className={`fixed left-0 top-0 z-50 flex h-16 w-full items-center border-0 transition-colors duration-300 lg:h-20 ${
           scrolled ? "bg-[#f5f5f5]" : "bg-transparent"
         }`}
       >
         <div className="container mx-auto flex items-center justify-between px-6">
           <Logo />
 
-          <ul className="hidden lg:flex items-center gap-4">
+          <ul className="hidden items-center gap-4 lg:flex">
             {PATHS.map(({ name, path, icon: Icon }) => (
               <li key={name}>
                 <Link to={path}>
                   <div className="flex items-center gap-2">
                     {name}
-                    <Icon className="h-4 w-4" />
+                    <Icon className="size-4" />
                   </div>
                 </Link>
               </li>
@@ -79,27 +77,27 @@ export default function Header() {
             className="lg:hidden"
           >
             {openNav ? (
-              <XMarkIcon className="h-6 w-6 text-[#34333d]" />
+              <XMarkIcon className="size-6 text-[#34333d]" />
             ) : (
-              <Bars3Icon className="h-6 w-6 text-[#34333d]" />
+              <Bars3Icon className="size-6 text-[#34333d]" />
             )}
           </IconButton>
         </div>
 
         <div
-          className={`absolute top-full w-content right-0 bg-[#34333d] text-[#f5f5f5] mr-4 rounded transition-transform duration-300 ${
+          className={`absolute right-0 top-full z-auto mr-4 w-fit rounded bg-[#34333d] text-[#f5f5f5] transition-transform duration-300 ${
             openNav
               ? "translate-y-0 opacity-100"
-              : "-translate-y-full opacity-0 pointer-events-none"
+              : "pointer-events-none -translate-y-full opacity-0"
           }`}
         >
           <ul className="flex flex-col gap-4 p-6">
             {PATHS.map(({ name, path, icon: Icon }) => (
               <li key={name} className="text-[#f5f5f5]">
                 <Link to={path}>
-                  <div className="block flex items-center gap-2">
+                  <div className="flex items-center gap-2">
                     {name}
-                    <Icon className="h-4 w-4" />
+                    <Icon className="size-4" />
                   </div>
                 </Link>
               </li>

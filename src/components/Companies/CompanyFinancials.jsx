@@ -22,7 +22,7 @@ export default function CompanyFinancials({ recordIds = [] }) {
   return (
     <div className="flex flex-col py-4 lg:pt-8">
       <h3 className="mb-4 text-xl font-semibold text-[#f5f5f5]">Financials</h3>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {financials.map((item, i) => {
           const { Metric, TextValue } = item.fields
           const iconKey = item.fields["Icon"]
@@ -31,7 +31,7 @@ export default function CompanyFinancials({ recordIds = [] }) {
           return (
             <div
               key={i}
-              className="bg-[#2f2e38] rounded-lg p-6 shadow-md text-center relative flex flex-col justify-center items-center"
+              className="relative flex flex-col items-center justify-center rounded-lg bg-[#2f2e38] p-6 text-center shadow-md"
             >
               {iconPath && (
                 <Image
@@ -42,7 +42,9 @@ export default function CompanyFinancials({ recordIds = [] }) {
                   className="mb-2"
                 />
               )}
-              <p className="text-md text-[#ddd] font-semibold mb-1">{Metric}</p>
+              <p className="mb-1 text-base font-semibold text-[#ddd]">
+                {Metric}
+              </p>
               <p className="text-lg text-[#bbb]">{TextValue}</p>
             </div>
           )
