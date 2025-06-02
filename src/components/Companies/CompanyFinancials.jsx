@@ -1,5 +1,7 @@
 "use client"
 
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import icons from "src/common/icons"
@@ -46,6 +48,16 @@ export default function CompanyFinancials({ recordIds = [] }) {
                 {Metric}
               </p>
               <p className="text-lg text-[#bbb]">{TextValue}</p>
+              <div className="absolute bottom-1 right-2 flex items-center gap-1 text-xs text-[#888]">
+                {item.fields["Financials Reported in:"] && (
+                  <>
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    <p className="text-xs text-[#888]">
+                      Reported in: {item.fields["Financials Reported in:"]}
+                    </p>
+                  </>
+                )}
+              </div>
             </div>
           )
         })}

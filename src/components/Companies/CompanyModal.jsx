@@ -1,6 +1,10 @@
 "use client"
 
-import { faCalendarAlt, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"
+import {
+  faCalendarAlt,
+  faInfoCircle,
+  faXmarkCircle,
+} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
@@ -81,14 +85,12 @@ export default function CompanyModal({
                   {fields["Company Summary"] || fields["Description "]}
                 </p>
               ) : null}
-
               {fields["Last Update"] && (
                 <div className="mb-6 text-sm text-[#ccc]">
                   Last Update:{" "}
                   <span className="font-medium">{fields["Last Update"]}</span>
                 </div>
               )}
-
               <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {mainStatsFields.map((field) => (
                   <div
@@ -104,7 +106,6 @@ export default function CompanyModal({
                   </div>
                 ))}
               </div>
-
               {fields["Latest Developments"] && (
                 <div className="flex flex-col py-4 lg:pt-8">
                   <h3 className="mb-4 text-xl font-semibold text-[#f5f5f5]">
@@ -142,7 +143,6 @@ export default function CompanyModal({
                   </div>
                 </div>
               )}
-
               {Array.isArray(fields["Founding Team"]) && (
                 <div className="flex flex-col py-4 lg:pt-8">
                   <h3 className="mb-4 text-xl font-semibold text-[#f5f5f5]">
@@ -165,7 +165,7 @@ export default function CompanyModal({
                           alt={entry.split(" - ")[0]}
                           width={1000}
                           height={1000}
-                          className="mx-auto size-16 rounded-full object-contain"
+                          className="mx-auto size-16 object-contain"
                         />
                         <p
                           key={index}
@@ -182,9 +182,43 @@ export default function CompanyModal({
                   </div>
                 </div>
               )}
-
               {fields["Financials"] && (
                 <CompanyFinancials recordIds={fields["Financials"]} />
+              )}
+              {fields["Patents"] && (
+                <div className="flex flex-col py-4 lg:pt-8">
+                  <h3 className="mb-4 text-xl font-semibold text-[#f5f5f5]">
+                    Patents
+                  </h3>
+                  <div className="relative w-full rounded-lg bg-[#2f2e38] p-4 shadow-md lg:p-6">
+                    {fields["Patents"] ? (
+                      <>
+                        <div className="flex flex-col items-center">
+                          <Image
+                            src={icons["patentIcon"]}
+                            alt="Patent icon"
+                            width={1000}
+                            height={1000}
+                            className="mx-auto size-16 object-contain"
+                          />
+                          <p className="text-[#ddd] ">{fields["Patents"]}</p>
+                        </div>
+                        <div className="absolute bottom-1 right-2 flex items-center gap-1 text-xs text-[#888]">
+                          {fields["Source"] && (
+                            <>
+                              <FontAwesomeIcon icon={faInfoCircle} />
+                              <p className="text-xs text-[#888]">
+                                Source: {fields["Source"]}
+                              </p>
+                            </>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <p className="text-[#bbb]">No patents listed</p>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
           </motion.div>
