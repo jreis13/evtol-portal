@@ -13,7 +13,7 @@ import MainHero from "src/components/Structure/MainHero"
 export default function Layout() {
   const [companies, setCompanies] = useState([])
   const [models, setModels] = useState([])
-  const [sales, setSales] = useState([])
+  // const [sales, setSales] = useState([])
 
   useEffect(() => {
     fetch("/api/companies", { cache: "no-store" })
@@ -29,12 +29,12 @@ export default function Layout() {
       .catch((err) => console.error("Error fetching models:", err))
   }, [])
 
-  useEffect(() => {
-    fetch("/api/sales", { cache: "no-store" })
-      .then((res) => res.json())
-      .then(setSales)
-      .catch((err) => console.error("Error fetching sales:", err))
-  }, [])
+  // useEffect(() => {
+  //   fetch("/api/sales", { cache: "no-store" })
+  //     .then((res) => res.json())
+  //     .then(setSales)
+  //     .catch((err) => console.error("Error fetching sales:", err))
+  // }, [])
 
   const trendingCompanies = companies.filter(
     (c) => Array.isArray(c.fields.Trending) && c.fields.Trending.includes("Yes")
