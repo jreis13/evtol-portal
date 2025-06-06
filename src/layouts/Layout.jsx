@@ -168,7 +168,7 @@ export default function Layout() {
         <div id="sales">
           <DataTable
             title="Sales"
-            records={sales}
+            records={[]}
             visibleFields={[
               "Company",
               "Aircraft Model",

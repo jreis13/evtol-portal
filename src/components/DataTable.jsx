@@ -10,7 +10,7 @@ import { useEffect, useMemo, useState } from "react"
 export default function DataTable({
   title,
   records = [],
-  blurred = false,
+  blurred = true,
   visibleFields,
 }) {
   const [filters, setFilters] = useState({ "Order Date Range": "2025 - 2026" })
@@ -151,16 +151,11 @@ export default function DataTable({
         {blurred && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#f5f5f5]/80 backdrop-blur-sm">
             <div className="px-4 text-center">
-              <p className="mb-2 font-semibold text-[#403f4c]">
-                This table is only available to Pro users.
-              </p>
-              <button className="rounded-md bg-[#d87103] px-5 py-2 font-medium text-[#f5f5f5] transition duration-300 hover:text-[#403f4c]">
-                Upgrade Now
-              </button>
+              <p className="mb-2 font-semibold text-[#403f4c]">Coming Soon</p>
             </div>
           </div>
         )}
-        <table className="min-w-full table-auto rounded-xl border text-sm text-[#403f4c]">
+        <table className="min-h-48 min-w-full  table-auto rounded-xl border text-sm text-[#403f4c]">
           <thead className="bg-[#eaeaea] text-left text-xs uppercase tracking-wide">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
