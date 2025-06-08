@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kameron:wght@400..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --header-height: 3rem;
+}
+
+.main-hero {
+  height: calc(100vh - var(--header-height));
+}
+
+.caret {
+  font-family: "Poppins", sans-serif;
+  font-size: 32px;
+}
+
+.caret-down {
+  margin-top: 15px;
+}
+
+h1 {
+  font-family: "Syne", sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 76px;
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 48px;
+    line-height: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 36px;
+    line-height: 46px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+
+h2 {
+  font-family: "Syne", sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 42px;
+}
+
+h3 {
+  font-family: "Syne", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #403f4c;
+  color: #e8e8e8;
+  font-family: "Syne", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+p {
+  font-family: "Syne", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.link {
+  transition:
+    color 0.3s,
+    opacity 0.3s;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #6600cc;
+  opacity: 0.7;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #34333d;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  transition: background-color;
+  transition-duration: 1s;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.number {
+  font-family: "Kameron", sans-serif;
+}
+
+.text-outline {
+  text-shadow:
+    -1px -1px 0 #403f4c,
+    1px -1px 0 #403f4c,
+    -1px 1px 0 #403f4c,
+    1px 1px 0 #403f4c;
+}
