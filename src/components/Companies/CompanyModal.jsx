@@ -12,6 +12,7 @@ import { useEffect } from "react"
 import icons from "../../common/icons"
 import CompanyFinancials from "./CompanyFinancials"
 import CompanyProducts from "./CompanyProducts"
+import StockOverview from "./StockOverview"
 
 export default function CompanyModal({
   isOpen,
@@ -223,6 +224,9 @@ export default function CompanyModal({
               )}
               {Array.isArray(fields["Products"]) && (
                 <CompanyProducts productNames={fields["Products"]} />
+              )}
+              {fields["Stock Ticker"] && (
+                <StockOverview symbol={fields["Stock Ticker"]} />
               )}
             </div>
           </motion.div>
