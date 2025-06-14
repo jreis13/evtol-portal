@@ -156,11 +156,11 @@ export default function StockOverview({ symbol }) {
             <p className="text-[#bbb]">${open.toFixed(2)}</p>
           </div>
           <div>
-            <p className="text-xs text-green-400">High</p>
+            <p className="text-xs text-green-400">High (24h)</p>
             <p className="text-[#bbb]">${high.toFixed(2)}</p>
           </div>
           <div>
-            <p className="text-xs text-red-500">Low</p>
+            <p className="text-xs text-red-500">Low (24h)</p>
             <p className="text-[#bbb]">${low.toFixed(2)}</p>
           </div>
           <div>
