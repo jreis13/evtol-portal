@@ -1,8 +1,6 @@
 "use client"
 
-import Image from "next/image"
 import { useEffect, useState } from "react"
-import icons from "src/common/icons"
 
 export default function CompanyProducts({ productNames = [] }) {
   const [products, setProducts] = useState([])
@@ -37,21 +35,13 @@ export default function CompanyProducts({ productNames = [] }) {
       <div className={`grid w-full gap-4 ${gridCols}`}>
         {products.map((product, i) => {
           const name = product.fields?.Name || "Unnamed Product"
-          const image = product.fields?.["Product Image"] || icons["planeIcon"]
 
           return (
             <div
               key={i}
               className="flex flex-col items-center justify-start rounded-lg bg-[#2f2e38] p-6 text-center shadow-md"
             >
-              <p className="mb-2 text-lg font-medium text-[#ddd]">{name}</p>
-              <Image
-                src={image}
-                alt={name}
-                width={1000}
-                height={1000}
-                className="object-contain"
-              />
+              <p className="text-lg font-medium text-[#ddd]">{name}</p>
             </div>
           )
         })}
