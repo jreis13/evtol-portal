@@ -52,7 +52,7 @@ export default function DataCards({
     range: "",
     speed: "",
     passengers: "",
-    suitability: "Suburban Air Mobility",
+    suitability: "",
     yearOfCertification: "",
   })
   const handleProdFilterChange = (type, value) => {
