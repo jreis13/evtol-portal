@@ -52,7 +52,7 @@ export default function DataCards({
     range: "",
     speed: "",
     passengers: "",
-    suitability: "",
+    suitability: "Suburban Air Mobility",
     yearOfCertification: "",
   })
   const handleProdFilterChange = (type, value) => {
@@ -152,13 +152,11 @@ export default function DataCards({
     [makeBuckets]
   )
 
-  const suitabilityOptions = useMemo(
-    () =>
-      Array.from(new Set(items.map((it) => it.fields["Suitability"])))
-        .sort()
-        .filter((v) => v != null),
-    [items]
-  )
+  const suitabilityOptions = [
+    "Urban Air Mobility",
+    "Suburban Air Mobility",
+    "Regional Air Mobility",
+  ]
 
   const yearOfCertificationOptions = useMemo(
     () =>
