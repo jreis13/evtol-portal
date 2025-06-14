@@ -267,14 +267,6 @@ export default function DataCards({
     return () => window.removeEventListener("resize", updateVisibleCount)
   }, [])
 
-  useEffect(() => {
-    console.log(
-      "items for section:",
-      title,
-      items.map((i) => i.fields.Name || i.fields["Company Name"])
-    )
-  }, [items, title])
-
   const handlePrev = () => setCurrentIndex((p) => Math.max(p - visibleCount, 0))
   const handleNext = () =>
     setCurrentIndex((p) => Math.min(p + visibleCount, total - visibleCount))
