@@ -135,14 +135,37 @@ export default function StockOverview({ symbol }) {
             options={{
               responsive: true,
               maintainAspectRatio: false,
-              plugins: { legend: { display: false } },
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: (context) => `$${context.parsed.y.toFixed(3)}`,
+                  },
+                },
+              },
               scales: {
                 x: {
+                  title: {
+                    display: true,
+                    text: "Time",
+                    color: "#bbb",
+                    font: {
+                      size: 14,
+                    },
+                  },
                   ticks: {
                     color: "#bbb",
                   },
                 },
                 y: {
+                  title: {
+                    display: true,
+                    text: "Price (USD)",
+                    color: "#bbb",
+                    font: {
+                      size: 14,
+                    },
+                  },
                   ticks: {
                     color: "#bbb",
                   },
