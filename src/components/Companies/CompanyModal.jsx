@@ -11,6 +11,7 @@ import Image from "next/image"
 import { useEffect } from "react"
 import icons from "../../common/icons"
 import CompanyFinancials from "./CompanyFinancials"
+import CompanyProducts from "./CompanyProducts"
 
 export default function CompanyModal({
   isOpen,
@@ -219,6 +220,9 @@ export default function CompanyModal({
                     )}
                   </div>
                 </div>
+              )}
+              {Array.isArray(fields["Products"]) && (
+                <CompanyProducts productNames={fields["Products"]} />
               )}
             </div>
           </motion.div>
