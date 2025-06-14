@@ -55,12 +55,14 @@ export default function DataCards({
     suitability: "",
     yearOfCertification: "",
   })
+
   const handleProdFilterChange = (type, value) => {
     setProdFilters((prev) => ({
       ...prev,
       [type]: prev[type] === value ? "" : value,
     }))
   }
+
   const clearProdFilters = () => {
     setProdFilters({
       range: "",
@@ -70,6 +72,8 @@ export default function DataCards({
       yearOfCertification: "",
     })
   }
+
+  const [searchTerm, setSearchTerm] = useState("")
 
   const countryOptions = useMemo(
     () =>
@@ -228,6 +232,14 @@ export default function DataCards({
         return true
       })
     }
+    if (searchTerm.trim()) {
+      const lower = searchTerm.trim().toLowerCase()
+      list = list.filter((it) => {
+        const name = it.fields["Name"] || it.fields["Company Name"] || ""
+        return name.toLowerCase().includes(lower)
+      })
+    }
+
     return list
   }, [
     items,
@@ -239,6 +251,7 @@ export default function DataCards({
     rangeBuckets,
     speedBuckets,
     passengerBuckets,
+    searchTerm,
   ])
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -392,6 +405,14 @@ export default function DataCards({
                 >
                   Clear
                 </motion.button>
+                <input
+                  type="text"
+                  placeholder="Search by name..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none"
+                />
+
                 <motion.button
                   onClick={() => setIsFilterExpanded(false)}
                   className="h-fit text-[#403f4c] focus:outline-none"
@@ -523,6 +544,14 @@ export default function DataCards({
                 >
                   Clear
                 </motion.button>
+                <input
+                  type="text"
+                  placeholder="Search by name..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full rounded-lg bg-[#34333d] px-4 py-2 text-[#e8e8e8] focus:outline-none"
+                />
+
                 <motion.button
                   onClick={() => setIsFilterExpanded(false)}
                   className="h-fit text-[#403f4c] focus:outline-none"
