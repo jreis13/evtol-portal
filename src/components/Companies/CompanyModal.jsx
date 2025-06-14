@@ -169,10 +169,7 @@ export default function CompanyModal({
                           height={1000}
                           className="mx-auto size-16 object-contain"
                         />
-                        <p
-                          key={index}
-                          className="text-center text-lg text-[#ddd]"
-                        >
+                        <p className="text-center text-lg text-[#ddd]">
                           {entry.split(" - ")[0]} <br />{" "}
                           <span className="text-base text-[#bbb]">
                             {entry.split(" - ")[1]}

@@ -16,7 +16,7 @@ export async function GET(req) {
 
   const { searchParams } = new URL(req.url)
   const symbol = searchParams.get("symbol")
-  const key = process.env.ALPHA_VANTAGE_API_KEY
+  const key = process.env.TWELVE_DATA_API_KEY
 
   if (!symbol) {
     return NextResponse.json({ error: "Missing symbol" }, { status: 400 })
@@ -42,17 +42,12 @@ export async function GET(req) {
   }
 
   try {
-    const [quoteRes, overviewRes] = await Promise.all([
-      fetch(
-        `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${key}`
-      ),
-      fetch(
-        `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${key}`
-      ),
+    const [quoteRes] = await Promise.all([
+      fetch(`https://api.twelvedata.com/quote?symbol=${symbol}&apikey=${key}`),
     ])
 
     const quote = await quoteRes.json()
-    const overview = await overviewRes.json()
+    const overview = { Name: symbol }
     const payload = { quote, overview }
 
     await redis.set(

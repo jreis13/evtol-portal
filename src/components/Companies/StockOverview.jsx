@@ -45,7 +45,6 @@ export default function StockOverview({ symbol }) {
       .then((res) => res.json())
       .then((fresh) => {
         setData(fresh)
-        // Use timestamp from Redis payload if available
         const ts = fresh.timestamp || Date.now()
         setLastFetched(new Date(ts))
         sessionStorage.setItem(
@@ -56,17 +55,15 @@ export default function StockOverview({ symbol }) {
       .catch(console.error)
   }, [symbol])
 
-  if (!data || !data.quote?.["Global Quote"]) return null
+  if (!data || !data.quote) return null
 
-  const quote = data.quote["Global Quote"]
-  const overview = data.overview || {}
-
-  const price = parseFloat(quote["05. price"])
-  const change = parseFloat(quote["09. change"])
-  const changePercent = quote["10. change percent"]
-  const open = parseFloat(quote["02. open"])
-  const high = parseFloat(quote["03. high"])
-  const low = parseFloat(quote["04. low"])
+  const quote = data.quote
+  const price = parseFloat(quote.close)
+  const change = parseFloat(quote.change)
+  const changePercent = `${parseFloat(quote.percent_change).toFixed(2)}%`
+  const open = parseFloat(quote.open)
+  const high = parseFloat(quote.high)
+  const low = parseFloat(quote.low)
 
   const now = new Date()
   const timestamps = Array(10)
@@ -91,9 +88,7 @@ export default function StockOverview({ symbol }) {
         Stock Overview
       </h3>
       <div className="rounded-lg bg-[#1e1e1e] p-6 text-white shadow-lg">
-        <h2 className="mb-2 text-xl text-[#e8e8e8]">
-          {overview.Name || symbol}
-        </h2>
+        <h2 className="mb-2 text-xl text-[#e8e8e8]">{quote.name || symbol}</h2>
         <div className="flex items-end gap-3">
           <h2 className="text-4xl font-bold text-green-400">
             {price.toFixed(2)} USD
@@ -189,20 +184,28 @@ export default function StockOverview({ symbol }) {
             <p className="text-[#bbb]">${low.toFixed(2)}</p>
           </div>
           <div>
-            <p className="text-xs text-[#d87103]">Market Cap</p>
+            <p className="text-xs text-[#d87103]">Previous Close</p>
             <p className="text-[#bbb]">
-              {overview.MarketCapitalization
-                ? `$${(overview.MarketCapitalization / 1e9).toFixed(2)}B`
+              {quote.previous_close
+                ? `$${Number(quote.previous_close).toFixed(2)}`
                 : "—"}
             </p>
           </div>
           <div>
             <p className="text-xs text-green-400">Year High</p>
-            <p className="text-[#bbb]">${overview["52WeekHigh"] || "—"}</p>
+            <p className="text-[#bbb]">
+              {quote.fifty_two_week?.high
+                ? `$${Number(quote.fifty_two_week.high).toFixed(2)}`
+                : "—"}
+            </p>
           </div>
           <div>
             <p className="text-xs text-red-500">Year Low</p>
-            <p className="text-[#bbb]">${overview["52WeekLow"] || "—"}</p>
+            <p className="text-[#bbb]">
+              {quote.fifty_two_week?.low
+                ? `$${Number(quote.fifty_two_week.low).toFixed(2)}`
+                : "—"}
+            </p>
           </div>
         </div>
       </div>

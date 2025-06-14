@@ -569,11 +569,7 @@ export default function DataCards({
         <div className="mx-auto flex max-w-7xl justify-center">
           <AnimatePresence mode="wait">
             <motion.div
-              key={
-                currentIndex +
-                JSON.stringify(filters) +
-                JSON.stringify(prodFilters)
-              }
+              key={`view-${currentIndex}-${visibleItems.map((i) => i.id).join("-")}`}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
