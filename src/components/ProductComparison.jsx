@@ -28,7 +28,9 @@ export default function ProductComparison({ items = [], config = {} }) {
     return ["All", ...orderedOptions.filter((opt) => available.has(opt))]
   }, [items])
 
-  const [suitabilityFilter, setSuitabilityFilter] = useState("All")
+  const [suitabilityFilter, setSuitabilityFilter] = useState(
+    "Suburban Air Mobility"
+  )
   const [xAttribute, setXAttribute] = useState("")
   const [yAttribute, setYAttribute] = useState("")
   const [graphType, setGraphType] = useState("")
