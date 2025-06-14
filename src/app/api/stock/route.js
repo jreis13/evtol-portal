@@ -29,9 +29,15 @@ export async function GET(req) {
     const parsed = JSON.parse(cached)
     const age = Date.now() - parsed.timestamp
     if (age < 15 * 60 * 1000) {
-      return NextResponse.json(parsed.data, {
-        headers: { "cache-control": "no-store" },
-      })
+      return NextResponse.json(
+        {
+          ...parsed.data,
+          timestamp: parsed.timestamp,
+        },
+        {
+          headers: { "cache-control": "no-store" },
+        }
+      )
     }
   }
 
@@ -54,9 +60,15 @@ export async function GET(req) {
       JSON.stringify({ data: payload, timestamp: Date.now() })
     )
 
-    return NextResponse.json(payload, {
-      headers: { "cache-control": "no-store" },
-    })
+    return NextResponse.json(
+      {
+        ...payload,
+        timestamp: Date.now(),
+      },
+      {
+        headers: { "cache-control": "no-store" },
+      }
+    )
   } catch (error) {
     console.error("Error fetching stock data:", error)
     return NextResponse.json(
