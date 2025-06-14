@@ -24,7 +24,7 @@ export default function CompanyProducts({ productNames = [] }) {
   const count = products.length
   let gridCols =
     count === 1
-      ? "grid-cols-1 place-items-center"
+      ? "grid-cols-1"
       : count === 2 || count === 4
         ? "grid-cols-2"
         : "grid-cols-3"
