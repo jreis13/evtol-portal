@@ -45,10 +45,12 @@ export default function StockOverview({ symbol }) {
       .then((res) => res.json())
       .then((fresh) => {
         setData(fresh)
-        setLastFetched(new Date())
+        // Use timestamp from Redis payload if available
+        const ts = fresh.timestamp || Date.now()
+        setLastFetched(new Date(ts))
         sessionStorage.setItem(
           key,
-          JSON.stringify({ data: fresh, timestamp: Date.now() })
+          JSON.stringify({ data: fresh, timestamp: ts })
         )
       })
       .catch(console.error)
@@ -108,7 +110,7 @@ export default function StockOverview({ symbol }) {
 
         {lastFetched && (
           <p className="mt-1 text-sm text-gray-400">
-            Updated:{" "}
+            Last Updated:{" "}
             {lastFetched.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
