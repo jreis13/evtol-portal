@@ -8,19 +8,24 @@ export default function ProductComparison({ items = [], config = {} }) {
   const { titleField = "Name" } = config
 
   const suitabilityOptions = useMemo(() => {
-    const setOpts = new Set(["All"])
+    const orderedOptions = [
+      "Urban Air Mobility",
+      "Suburban Air Mobility",
+      "Regional Air Mobility",
+    ]
+    const available = new Set()
     items.forEach((item) => {
       const raw = item.fields.Suitability
       if (typeof raw === "string") {
         const norm = raw.toLowerCase().trim()
-        if (norm === "urban air mobility") setOpts.add("Urban Air Mobility")
-        else if (norm === "regional air mobility")
-          setOpts.add("Regional Air Mobility")
+        if (norm === "urban air mobility") available.add("Urban Air Mobility")
         else if (norm === "suburban air mobility")
-          setOpts.add("Suburban Air Mobility")
+          available.add("Suburban Air Mobility")
+        else if (norm === "regional air mobility")
+          available.add("Regional Air Mobility")
       }
     })
-    return Array.from(setOpts)
+    return ["All", ...orderedOptions.filter((opt) => available.has(opt))]
   }, [items])
 
   const [suitabilityFilter, setSuitabilityFilter] = useState("All")
@@ -37,10 +42,10 @@ export default function ProductComparison({ items = [], config = {} }) {
       return (
         (suitabilityFilter === "Urban Air Mobility" &&
           norm === "urban air mobility") ||
-        (suitabilityFilter === "Regional Air Mobility" &&
-          norm === "regional air mobility") ||
         (suitabilityFilter === "Suburban Air Mobility" &&
-          norm === "suburban air mobility")
+          norm === "suburban air mobility") ||
+        (suitabilityFilter === "Regional Air Mobility" &&
+          norm === "regional air mobility")
       )
     })
   }, [items, suitabilityFilter])
@@ -68,7 +73,12 @@ export default function ProductComparison({ items = [], config = {} }) {
           return false
         })
       )
-      .filter((attr) => attr !== "Range" && attr !== "Top Speed")
+      .filter(
+        (attr) =>
+          attr !== "Range" &&
+          attr !== "Top Speed" &&
+          attr !== "Year of Certification"
+      )
   }, [allAttributes, filteredItems])
 
   const graphTypesSingle = useMemo(

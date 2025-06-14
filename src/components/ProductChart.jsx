@@ -10,15 +10,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js"
-import {
-  Bar,
-  Bubble,
-  Doughnut,
-  Line,
-  PolarArea,
-  Radar,
-  Scatter,
-} from "react-chartjs-2"
+import { Bar, Doughnut, Line, PolarArea, Radar } from "react-chartjs-2"
 
 import annotationPlugin from "chartjs-plugin-annotation"
 
@@ -68,41 +60,14 @@ export default function ProductChart({
     [yData]
   )
 
-  const combinedData = xData.map((x, i) => {
-    const [company] = labels[i].split(" - ")
-    return {
-      x,
-      y: yData ? yData[i] : null,
-      label: labels[i],
-      company,
-      color: companyColors[company],
-      r: Math.random() * 15 + 5,
-    }
-  })
-
-  const scatterData = {
-    labels,
-    datasets: [
-      {
-        label: yLabel ? `${xLabel} vs ${yLabel}` : `${xLabel}`,
-        data: combinedData,
-        backgroundColor: combinedData.map((p) => p.color),
-        pointRadius: 10,
-        pointHoverRadius: 12,
-      },
-    ],
+  const normalizeArray = (arr) => {
+    const max = Math.max(...arr)
+    return max === 0 ? arr : arr.map((v) => (v / max) * 100)
   }
 
-  const bubbleData = {
-    labels,
-    datasets: [
-      {
-        label: yLabel ? `${xLabel} vs ${yLabel}` : `${xLabel}`,
-        data: combinedData.map((p) => ({ x: p.x, y: p.y, r: p.r })),
-        backgroundColor: combinedData.map((p) => p.color),
-      },
-    ],
-  }
+  const shouldNormalize = graphType === "Radar" || graphType === "Polar Area"
+  const xPlotData = shouldNormalize ? normalizeArray(xData) : xData
+  const yPlotData = shouldNormalize && yData ? normalizeArray(yData) : yData
 
   const generalData = useMemo(() => {
     const base =
@@ -110,13 +75,13 @@ export default function ProductChart({
         ? [
             {
               label: xLabel,
-              data: xData,
+              data: xPlotData,
               borderRadius: graphType === "Bar" ? 10 : undefined,
               backgroundColor: Object.values(companyColors),
             },
             {
               label: yLabel,
-              data: yData,
+              data: yPlotData,
               borderRadius: graphType === "Bar" ? 10 : undefined,
               backgroundColor: Object.values(companyColors),
             },
@@ -124,7 +89,7 @@ export default function ProductChart({
         : [
             {
               label: xLabel,
-              data: xData,
+              data: xPlotData,
               borderRadius: graphType === "Bar" ? 10 : undefined,
               backgroundColor: Object.values(companyColors),
             },
@@ -147,7 +112,16 @@ export default function ProductChart({
     }
 
     return { labels, datasets: base }
-  }, [labels, xData, yData, xLabel, yLabel, graphType, companyColors])
+  }, [
+    labels,
+    xPlotData,
+    yPlotData,
+    xLabel,
+    yLabel,
+    graphType,
+    companyColors,
+    yData,
+  ])
 
   const avgPrimary = useMemo(() => {
     const vals = generalData.datasets[0].data
@@ -172,7 +146,17 @@ export default function ProductChart({
                 ? `${xLabel}: ${x}, ${yLabel}: ${y}`
                 : `${xLabel}: ${x}`
             }
-            return `${ctx.dataset.label}: ${ctx.raw}`
+            const val = ctx.raw
+            const original =
+              shouldNormalize &&
+              (xLabel === ctx.dataset.label || yLabel === ctx.dataset.label)
+                ? graphType === "Radar" || graphType === "Polar Area"
+                  ? graphType === "Radar" && ctx.datasetIndex === 1 && yData
+                    ? yData[ctx.dataIndex]
+                    : xData[ctx.dataIndex]
+                  : val
+                : val
+            return `${ctx.dataset.label}: ${original}`
           },
         },
       },
@@ -201,7 +185,6 @@ export default function ProductChart({
           avgYLine: {
             display:
               (graphType === "Line" && avgY) || (graphType === "Bar" && avgY),
-
             type: "line",
             yMin: avgY,
             yMax: avgY,
@@ -231,6 +214,29 @@ export default function ProductChart({
     },
   }
 
+  const opts =
+    graphType === "Radar" || graphType === "Polar Area"
+      ? {
+          ...chartOptions,
+          scales: {
+            r: {
+              beginAtZero: true,
+              ticks: {
+                display: false,
+              },
+              grid: {
+                circular: true,
+              },
+              pointLabels: {
+                display: true,
+              },
+            },
+          },
+        }
+      : graphType === "Doughnut"
+        ? { ...chartOptions, scales: {} }
+        : chartOptions
+
   const areaGraphStyle = {
     width: "100%",
     maxWidth: "800px",
@@ -239,19 +245,7 @@ export default function ProductChart({
   }
 
   let ChartElement
-  const opts =
-    graphType === "Radar" ||
-    (graphType === "Doughnut") | (graphType === "Polar Area")
-      ? { ...chartOptions, scales: {} }
-      : chartOptions
-
   switch (graphType) {
-    case "Scatter":
-      ChartElement = <Scatter data={scatterData} options={chartOptions} />
-      break
-    case "Bubble":
-      ChartElement = <Bubble data={bubbleData} options={chartOptions} />
-      break
     case "Bar":
       ChartElement = <Bar data={generalData} options={chartOptions} />
       break
