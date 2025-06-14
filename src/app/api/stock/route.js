@@ -2,9 +2,18 @@ import { NextResponse } from "next/server"
 import { createClient } from "redis"
 
 const redis = createClient({ url: process.env.REDIS_URL })
-await redis.connect()
+
+let connected = false
+async function ensureConnected() {
+  if (!connected) {
+    await redis.connect()
+    connected = true
+  }
+}
 
 export async function GET(req) {
+  await ensureConnected()
+
   const { searchParams } = new URL(req.url)
   const symbol = searchParams.get("symbol")
   const key = process.env.ALPHA_VANTAGE_API_KEY
@@ -49,6 +58,7 @@ export async function GET(req) {
       headers: { "cache-control": "no-store" },
     })
   } catch (error) {
+    console.error("Error fetching stock data:", error)
     return NextResponse.json(
       { error: "Failed to fetch stock data" },
       { status: 500, headers: { "cache-control": "no-store" } }
