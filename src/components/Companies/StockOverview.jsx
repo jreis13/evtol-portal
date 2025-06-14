@@ -58,12 +58,14 @@ export default function StockOverview({ symbol }) {
   if (!data || !data.quote) return null
 
   const quote = data.quote
-  const price = parseFloat(quote.close)
-  const change = parseFloat(quote.change)
-  const changePercent = `${parseFloat(quote.percent_change).toFixed(2)}%`
-  const open = parseFloat(quote.open)
-  const high = parseFloat(quote.high)
-  const low = parseFloat(quote.low)
+  const price = parseFloat(quote.close) || 0
+  const change = parseFloat(quote.change) || 0
+  const changePercent = quote.percent_change
+    ? `${parseFloat(quote.percent_change).toFixed(2)}%`
+    : "0%"
+  const open = parseFloat(quote.open) || price
+  const high = parseFloat(quote.high) || price
+  const low = parseFloat(quote.low) || price
 
   const now = new Date()
   const timestamps = Array(10)

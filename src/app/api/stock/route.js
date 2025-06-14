@@ -47,6 +47,10 @@ export async function GET(req) {
     ])
 
     const quote = await quoteRes.json()
+
+    if (!quote || !quote.close || isNaN(parseFloat(quote.close))) {
+      throw new Error("Invalid data from Twelve Data")
+    }
     const overview = { Name: symbol }
     const payload = { quote, overview }
 
