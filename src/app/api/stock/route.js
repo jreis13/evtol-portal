@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
+import { createClient } from "redis"
 
-let stockCache = {}
+const redis = createClient({ url: process.env.REDIS_URL })
+await redis.connect()
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url)
@@ -11,13 +13,17 @@ export async function GET(req) {
     return NextResponse.json({ error: "Missing symbol" }, { status: 400 })
   }
 
-  const cached = stockCache[symbol]
-  const now = Date.now()
+  const cacheKey = `stock:${symbol}`
+  const cached = await redis.get(cacheKey)
 
-  if (cached && now - cached.timestamp < 15 * 60 * 1000) {
-    return NextResponse.json(cached.data, {
-      headers: { "cache-control": "no-store" },
-    })
+  if (cached) {
+    const parsed = JSON.parse(cached)
+    const age = Date.now() - parsed.timestamp
+    if (age < 15 * 60 * 1000) {
+      return NextResponse.json(parsed.data, {
+        headers: { "cache-control": "no-store" },
+      })
+    }
   }
 
   try {
@@ -32,13 +38,12 @@ export async function GET(req) {
 
     const quote = await quoteRes.json()
     const overview = await overviewRes.json()
-
     const payload = { quote, overview }
 
-    stockCache[symbol] = {
-      data: payload,
-      timestamp: now,
-    }
+    await redis.set(
+      cacheKey,
+      JSON.stringify({ data: payload, timestamp: Date.now() })
+    )
 
     return NextResponse.json(payload, {
       headers: { "cache-control": "no-store" },
