@@ -4,14 +4,11 @@ import StatGauge from "./StatGauge"
 
 export default function ProductCard({ item, onClick, config = {} }) {
   const {
-    image = "Logo Company",
     name = "Name",
     maxRange = 1400,
     maxSpeed = 644,
     maxPassengers = 10,
   } = config
-
-  const imageSrc = item.fields[image] || "/portal.png"
 
   const {
     unit = "Unit",
@@ -45,20 +42,9 @@ export default function ProductCard({ item, onClick, config = {} }) {
       </button>
 
       <div className="mb-4 flex flex-col">
-        <div className="flex min-h-[70px] items-center gap-4">
-          <div className="flex size-[70px] items-center justify-center">
-            <Image
-              src={imageSrc}
-              alt={item.fields[name] || name}
-              width={60}
-              height={60}
-              className="object-contain"
-            />
-          </div>
-          <h3 className="text-xl font-semibold group-hover:text-[#f5f5f5]">
-            {item.fields[name]}
-          </h3>
-        </div>
+        <h3 className="text-xl font-semibold group-hover:text-[#f5f5f5]">
+          {item.fields[name]}
+        </h3>
         {item.fields[unit] && (
           <div className="mx-auto mt-2 rounded-full border border-[#403f4c] bg-[#d87103] p-1 group-hover:border-[#f5f5f5] group-hover:text-[#f5f5f5]">
             <span className="text-xs">{item.fields[unit]}</span>

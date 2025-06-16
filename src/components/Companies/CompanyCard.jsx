@@ -1,10 +1,9 @@
 import Image from "next/image"
 
 export default function CompanyCard({ item, onClick, config }) {
-  const { imageField = "Logo", titleField = "Company Name" } = config || {}
+  const { titleField = "Company Name" } = config || {}
 
   const {
-    [imageField]: logo,
     [titleField]: name,
     "Market Share (%)": marketShare,
     "Amount Raised": raised,
@@ -26,24 +25,11 @@ export default function CompanyCard({ item, onClick, config }) {
           height={1000}
         />
       </button>
-      <div className="mb-4 flex items-center">
-        {logo && (
-          <div className="mb-6 flex items-center gap-4">
-            <Image
-              src={logo}
-              alt={name}
-              width={1000}
-              height={1000}
-              className="size-[70px] rounded-md object-contain"
-            />
-            <h3 className="text-xl font-semibold group-hover:text-[#f5f5f5]">
-              {name}
-            </h3>
-          </div>
-        )}
-      </div>
+      <h3 className="mb-6 text-xl font-semibold group-hover:text-[#f5f5f5]">
+        {name}
+      </h3>
 
-      <div className="mb-4 grid grid-cols-2 gap-4 text-sm group-hover:text-[#f5f5f5]">
+      <div className="grid grid-cols-2 gap-4 text-sm group-hover:text-[#f5f5f5]">
         {raised && (
           <div>
             <div className="font-medium">Amount Raised</div>
