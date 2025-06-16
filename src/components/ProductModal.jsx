@@ -3,7 +3,6 @@
 import { faCalendarAlt, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
-import Image from "next/image"
 import React, { useEffect } from "react"
 
 export default function ProductModal({
@@ -58,17 +57,7 @@ export default function ProductModal({
               />
             </button>
             <div className="flex flex-col items-center gap-10 lg:flex-row">
-              <div className="w-full shrink-0 lg:w-1/2">
-                <Image
-                  src={fields["Product Image"] || "/portal.png"}
-                  alt={fields.Name}
-                  width={1000}
-                  height={1000}
-                  className="h-auto w-full rounded object-contain"
-                />
-              </div>
-
-              <div className="flex w-full flex-col gap-4 lg:w-1/2">
+              <div className="flex w-full flex-col gap-4">
                 <div>
                   <h2 className="mb-2 text-3xl font-semibold text-[#f5f5f5]">
                     {fields.Name}
