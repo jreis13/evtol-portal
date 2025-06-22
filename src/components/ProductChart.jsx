@@ -144,7 +144,7 @@ export default function ProductChart({
             const val = ctx.raw
             const original =
               xLabel === ctx.dataset.label || yLabel === ctx.dataset.label
-                ? graphType === "Radar" || graphType === "Polar Area"
+                ? graphType === "Radar"
                   ? graphType === "Radar" && ctx.datasetIndex === 1 && yData
                     ? yData[ctx.dataIndex]
                     : xData[ctx.dataIndex]
@@ -208,16 +208,16 @@ export default function ProductChart({
   }
 
   const opts =
-    graphType === "Radar" || graphType === "Polar Area"
+    graphType === "Radar"
       ? {
           ...chartOptions,
           scales: {
             r: {
               beginAtZero: true,
               ticks: {
-                display: true, // ✅ This will show 100, 90, 80, etc.
-                backdropColor: "transparent", // Optional: removes the white box behind the text
-                color: "#666", // Optional: change text color
+                display: true,
+                backdropColor: "transparent",
+                color: "#666",
                 font: {
                   size: 10,
                 },
@@ -231,7 +231,7 @@ export default function ProductChart({
             },
           },
         }
-      : graphType === "Doughnut"
+      : graphType === "Doughnut" || graphType === "Polar Area"
         ? { ...chartOptions, scales: {} }
         : chartOptions
 

@@ -128,33 +128,41 @@ export default function ProductComparison({ items = [], config = {} }) {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col items-center gap-4 lg:w-screen lg:flex-row lg:justify-between">
         <div className="flex gap-4">
-          <Dropdown
-            attributes={numericAttributes}
-            selectedValue={xAttribute}
-            onChange={(value) => {
-              if (value === yAttribute) setYAttribute("")
-              setXAttribute(value)
-            }}
-          />
-
-          <Dropdown
-            attributes={[
-              "None",
-              ...numericAttributes.filter((a) => a !== xAttribute),
-            ]}
-            selectedValue={yAttribute || "None"}
-            onChange={(value) => setYAttribute(value === "None" ? "" : value)}
-          />
-
-          <Dropdown
-            attributes={availableGraphTypes}
-            selectedValue={graphType}
-            onChange={setGraphType}
-            className="ml-auto"
-          />
+          <div>
+            <p className="text-xs">Metric 1</p>
+            <Dropdown
+              attributes={numericAttributes}
+              selectedValue={xAttribute}
+              onChange={(value) => {
+                if (value === yAttribute) setYAttribute("")
+                setXAttribute(value)
+              }}
+            />
+          </div>
+          <div>
+            <p className="text-xs">Metric 2</p>
+            <Dropdown
+              attributes={[
+                "None",
+                ...numericAttributes.filter((a) => a !== xAttribute),
+              ]}
+              selectedValue={yAttribute || "None"}
+              onChange={(value) => setYAttribute(value === "None" ? "" : value)}
+            />
+          </div>
+          <div>
+            <p className="text-xs">Chart Type</p>
+            <Dropdown
+              attributes={availableGraphTypes}
+              selectedValue={graphType}
+              onChange={setGraphType}
+              className="ml-auto"
+            />
+          </div>
         </div>
 
         <div className="sm:mx-auto lg:self-end">
+          <p className="text-xs">Aircraft Suitability</p>
           <Dropdown
             attributes={suitabilityOptions}
             selectedValue={suitabilityFilter}
