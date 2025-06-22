@@ -3,7 +3,7 @@
 import { faCalendarAlt, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { AnimatePresence, motion } from "framer-motion"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 export default function ProductModal({
   isOpen,
@@ -12,6 +12,8 @@ export default function ProductModal({
   fieldsToDisplay = [],
 }) {
   const fields = model?.fields || null
+  const [aircraftData, setAircraftData] = useState(null)
+  const [loadingAircraft, setLoadingAircraft] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
@@ -24,6 +26,31 @@ export default function ProductModal({
       document.body.classList.remove("overflow-hidden")
     }
   }, [isOpen])
+
+  useEffect(() => {
+    const fetchAircraftActivity = async () => {
+      const registration = fields?.Registration || fields?.registration || null
+      if (!registration) return
+
+      setLoadingAircraft(true)
+
+      try {
+        const res = await fetch(`/api/aircraft?registration=${registration}`)
+        if (!res.ok) throw new Error("Aircraft data not found")
+        const data = await res.json()
+        setAircraftData(data)
+      } catch (err) {
+        console.error("Aerodatabox error:", err)
+        setAircraftData(null)
+      } finally {
+        setLoadingAircraft(false)
+      }
+    }
+
+    if (isOpen && fields) {
+      fetchAircraftActivity()
+    }
+  }, [isOpen, fields])
 
   return (
     <AnimatePresence>
@@ -125,6 +152,91 @@ export default function ProductModal({
                     </React.Fragment>
                   ))}
                 </div>
+
+                {fields["Registration"] && (
+                  <>
+                    <hr className="border-gray-600" />
+                    <div className="flex flex-col py-4 lg:pt-8">
+                      <h3 className="mb-4 text-xl font-semibold text-[#f5f5f5]">
+                        Aircraft Activity
+                      </h3>
+
+                      {loadingAircraft && (
+                        <p className="text-sm text-gray-400">
+                          Loading aircraft data...
+                        </p>
+                      )}
+
+                      {!loadingAircraft && aircraftData && (
+                        <div className="grid grid-cols-2 items-center space-y-2 rounded-lg bg-[#2f2e38] p-4 text-sm">
+                          <div>
+                            <p className="mb-1 text-sm font-semibold text-[#f5f5f5]">
+                              Registration:
+                            </p>
+                            <p className="text-base text-[#ccc]">
+                              {aircraftData.reg || "—"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="mb-1 text-sm font-semibold text-[#f5f5f5]">
+                              Model:
+                            </p>
+                            <p className="text-base text-[#ccc]">
+                              {aircraftData.model || "—"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="mb-1 text-sm font-semibold text-[#f5f5f5]">
+                              Model Code:
+                            </p>
+                            <p className="text-base text-[#ccc]">
+                              {aircraftData.modelCode || "—"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="mb-1 text-sm font-semibold text-[#f5f5f5]">
+                              Serial:
+                            </p>
+                            <p className="text-base text-[#ccc]">
+                              {aircraftData.serial || "—"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="mb-1 text-sm font-semibold text-[#f5f5f5]">
+                              Seats:
+                            </p>
+                            <p className="text-base text-[#ccc]">
+                              {aircraftData.numSeats || "—"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="mb-1 text-sm font-semibold text-[#f5f5f5]">
+                              Operator:
+                            </p>
+                            <p className="text-base text-[#ccc]">
+                              {aircraftData.airlineName || "—"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="mb-1 text-sm font-semibold text-[#f5f5f5]">
+                              First Flight:
+                            </p>
+                            <p className="text-base text-[#ccc]">
+                              {aircraftData.firstFlightDate?.split("T")[0] ||
+                                "—"}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {!loadingAircraft && !aircraftData && (
+                        <p className="text-sm text-gray-500">
+                          No aircraft data found for this registration.
+                        </p>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>
