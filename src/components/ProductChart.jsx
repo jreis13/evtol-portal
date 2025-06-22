@@ -231,9 +231,28 @@ export default function ProductChart({
             },
           },
         }
-      : graphType === "Doughnut" || graphType === "Polar Area"
+      : graphType === "Doughnut"
         ? { ...chartOptions, scales: {} }
-        : chartOptions
+        : graphType === "Polar Area"
+          ? {
+              ...chartOptions,
+              scales: {
+                r: {
+                  beginAtZero: true,
+                  ticks: {
+                    display: true,
+                    color: "#000",
+                    backdropColor: "#e8e8e8",
+                    font: {
+                      size: 11,
+                    },
+                    z: 10,
+                    clip: false,
+                  },
+                },
+              },
+            }
+          : chartOptions
 
   const areaGraphStyle = {
     width: "100%",
