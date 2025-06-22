@@ -116,7 +116,7 @@ export default function DataTable({
   })
 
   return (
-    <div className="mx-auto mb-20 max-w-7xl">
+    <div className="mx-auto my-20 max-w-7xl">
       <h2 className="mb-6 text-4xl font-semibold text-[#403f4c]">{title}</h2>
 
       <div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
