@@ -10,9 +10,10 @@ import {
   Title,
   Tooltip,
 } from "chart.js"
-import { Bar, Doughnut, Line, PolarArea, Radar } from "react-chartjs-2"
 
 import annotationPlugin from "chartjs-plugin-annotation"
+
+import { Bar, Doughnut, PolarArea, Radar } from "react-chartjs-2"
 
 ChartJS.register(
   CategoryScale,
@@ -60,14 +61,8 @@ export default function ProductChart({
     [yData]
   )
 
-  const normalizeArray = (arr) => {
-    const max = Math.max(...arr)
-    return max === 0 ? arr : arr.map((v) => (v / max) * 100)
-  }
-
-  const shouldNormalize = graphType === "Radar" || graphType === "Polar Area"
-  const xPlotData = shouldNormalize ? normalizeArray(xData) : xData
-  const yPlotData = shouldNormalize && yData ? normalizeArray(yData) : yData
+  const xPlotData = xData
+  const yPlotData = yData
 
   const generalData = useMemo(() => {
     const base =
@@ -95,7 +90,7 @@ export default function ProductChart({
             },
           ]
 
-    if (graphType === "Bar" || graphType === "Line") {
+    if (graphType === "Bar") {
       const idx = base[0].data
         .map((v, i) => [v, i])
         .sort((a, b) => b[0] - a[0])
@@ -148,8 +143,7 @@ export default function ProductChart({
             }
             const val = ctx.raw
             const original =
-              shouldNormalize &&
-              (xLabel === ctx.dataset.label || yLabel === ctx.dataset.label)
+              xLabel === ctx.dataset.label || yLabel === ctx.dataset.label
                 ? graphType === "Radar" || graphType === "Polar Area"
                   ? graphType === "Radar" && ctx.datasetIndex === 1 && yData
                     ? yData[ctx.dataIndex]
@@ -163,7 +157,7 @@ export default function ProductChart({
       annotation: {
         annotations: {
           avgLine: {
-            display: graphType === "Bar" || graphType === "Line",
+            display: graphType === "Bar",
             type: "line",
             yMin: avgPrimary,
             yMax: avgPrimary,
@@ -172,7 +166,7 @@ export default function ProductChart({
             borderDash: [5, 5],
             clip: false,
             label: {
-              display: graphType === "Bar" || graphType === "Line",
+              display: graphType === "Bar",
               content: `Avg ${xLabel}: ${avgPrimary.toFixed(0)}`,
               position: "end",
               backgroundColor: "rgba(0,0,0,0)",
@@ -183,8 +177,7 @@ export default function ProductChart({
             },
           },
           avgYLine: {
-            display:
-              (graphType === "Line" && avgY) || (graphType === "Bar" && avgY),
+            display: graphType === "Bar" && avgY,
             type: "line",
             yMin: avgY,
             yMax: avgY,
@@ -193,7 +186,7 @@ export default function ProductChart({
             borderDash: [5, 5],
             clip: false,
             label: {
-              display: graphType === "Line" || graphType === "Bar",
+              display: graphType === "Bar",
               content: `${avgY ? `Avg ${yLabel}: ${avgY?.toFixed(0)}` : ""}`,
               position: "end",
               backgroundColor: "rgba(0,0,0,0)",
@@ -222,7 +215,12 @@ export default function ProductChart({
             r: {
               beginAtZero: true,
               ticks: {
-                display: false,
+                display: true, // ✅ This will show 100, 90, 80, etc.
+                backdropColor: "transparent", // Optional: removes the white box behind the text
+                color: "#666", // Optional: change text color
+                font: {
+                  size: 10,
+                },
               },
               grid: {
                 circular: true,
@@ -248,9 +246,6 @@ export default function ProductChart({
   switch (graphType) {
     case "Bar":
       ChartElement = <Bar data={generalData} options={chartOptions} />
-      break
-    case "Line":
-      ChartElement = <Line data={generalData} options={chartOptions} />
       break
     case "Doughnut":
       ChartElement = (

@@ -87,7 +87,7 @@ export default function ProductComparison({ items = [], config = {} }) {
     () => ["Radar", "Bar", "Doughnut", "Polar Area"],
     []
   )
-  const graphTypesDouble = useMemo(() => ["Radar", "Bar", "Line"], [])
+  const graphTypesDouble = useMemo(() => ["Bar"], [])
 
   useEffect(() => {
     if (!xAttribute && numericAttributes.length) {
